@@ -2,6 +2,9 @@
     ViewData["Title"] = "Home Page";
 }
 
+@section Scripts {
+    <script src="~/js/Index.js"></script>
+}
 
 <div class="text-center">
     <h1 class="display-4">Out Team</h1>
@@ -18,19 +21,3 @@
     <button id="addMemberButtonId">Add</button>
 </div>
 
-@section Scripts {
-    <script>
-        // This JS file now uses jQuery. Pls see here: https://jquery.com/
-        $(document).ready(function () {
-            // see https://api.jquery.com/click/
-            $("#addMemberButtonId").click(function () {
-                var newcomerName = $("#nameInputId").val();
-
-                // Remember string interpolation
-                $("#teamMembersList").append(`<li>${newcomerName}</li>`);
-
-                $("#nameInputId").val("");
-            })
-        });
-    </script>
-}
