@@ -12,15 +12,24 @@ namespace HelloWorldWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly TeamInfo teamInfo;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            teamInfo = new TeamInfo();
+            teamInfo.Name = "Team1";
+            teamInfo.TeamMembers = new List<string>();
+            teamInfo.TeamMembers.Add("Fineas");
+            teamInfo.TeamMembers.Add("Patrick");
+            teamInfo.TeamMembers.Add("Radu");
+            teamInfo.TeamMembers.Add("Tudor");
+            teamInfo.TeamMembers.Add("Ema");
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(teamInfo);
         }
 
         public IActionResult Privacy()
