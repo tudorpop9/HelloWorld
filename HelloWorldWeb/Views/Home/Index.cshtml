@@ -2,7 +2,35 @@
     ViewData["Title"] = "Home Page";
 }
 
+
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Out Team</h1>
+    <p>Team 1:</p>
+    <ul id="teamMembersList">
+        <li>Fineas</li>
+        <li>Patrick</li>
+        <li>Radu</li>
+        <li>Tudor</li>
+        <li>Ema</li>
+    </ul>
+    <label for="nameInputId">New member</label>
+    <input id="nameInputId" type="text" placeholder="e.g Tudor" />
+    <button id="addMemberButtonId">Add</button>
 </div>
+
+@section Scripts {
+    <script>
+        // This JS file now uses jQuery. Pls see here: https://jquery.com/
+        $(document).ready(function () {
+            // see https://api.jquery.com/click/
+            $("#addMemberButtonId").click(function () {
+                var newcomerName = $("#nameInputId").val();
+
+                // Remember string interpolation
+                $("#teamMembersList").append(`<li>${newcomerName}</li>`);
+
+                $("#nameInputId").val("");
+            })
+        });
+    </script>
+}
