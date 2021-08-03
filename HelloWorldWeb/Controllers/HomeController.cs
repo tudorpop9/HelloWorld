@@ -24,6 +24,18 @@ namespace HelloWorldWeb.Controllers
             };
         }
 
+        [HttpGet]
+        public void AddTeamMember(string newTeammate)
+        {
+            teamInfo.TeamMembers.Add(newTeammate);
+        }
+
+        [HttpGet("/getTeamCount")]
+        public int getTeamCount()
+        {
+            return teamInfo.TeamMembers.Count();
+        }
+
         public IActionResult Index()
         {
             return View(teamInfo);
