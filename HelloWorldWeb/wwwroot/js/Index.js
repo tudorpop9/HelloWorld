@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: "https://localhost:44337/Home/AddTeamMember",
+            url: "/Home/AddTeamMember",
             data: {
                 "newTeammate": newcomerName
             },
