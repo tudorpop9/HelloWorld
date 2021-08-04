@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using HelloWorldWeb.Models;
+using HelloWorldWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -19,21 +20,18 @@ namespace HelloWorldWeb.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
-        private readonly TeamInfo teamInfo;
+        private readonly ITeamService teamService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// Home controller constructor.
         /// </summary>
         /// <param name="logger"> Necesary parameter for superclass.</param>
-        public HomeController(ILogger<HomeController> logger)
+        /// <param name="teamService"> Team service param.</param>
+        public HomeController(ILogger<HomeController> logger, ITeamService teamService)
         {
             this.logger = logger;
-            this.teamInfo = new TeamInfo
-            {
-                Name = "Team1",
-                TeamMembers = new List<string>(new string[] { "Fineas", "Patrick", "Radu", "Tudor", "Ema" }),
-            };
+            this.teamService = teamService;
         }
 
         /// <summary>
@@ -43,7 +41,7 @@ namespace HelloWorldWeb.Controllers
         [HttpPost]
         public void AddTeamMember(string newTeammate)
         {
-            teamInfo.TeamMembers.Add(newTeammate);
+            teamService.GetTeamInfo().TeamMembers.Add(newTeammate);
         }
 
         /// <summary>
@@ -53,7 +51,7 @@ namespace HelloWorldWeb.Controllers
         [HttpGet]
         public int GetTeamCount()
         {
-            return teamInfo.TeamMembers.Count();
+            return teamService.GetTeamInfo().TeamMembers.Count();
         }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace HelloWorldWeb.Controllers
         /// <returns>Returns an implementation of IActionResult which has the teamInfo member.</returns>
         public IActionResult Index()
         {
-            return View(teamInfo);
+            return View(teamService.GetTeamInfo());
         }
 
         /// <summary>
