@@ -4,9 +4,16 @@ $(document).ready(function () {
     $("#addMemberButtonId").click(function () {
         var newcomerName = $("#nameInputId").val();
 
-        // Remember string interpolation
-        $("#teamMembersList").append(`<li>${newcomerName}</li>`);
-
-        $("#nameInputId").val("");
+        $.ajax({
+            method: "POST",
+            url: "https://localhost:44337/Home/AddTeamMember",
+            data: {
+                "newTeammate": newcomerName
+            },
+            success: (result) => {
+                $("#teamMembersList").append(`<li>${newcomerName}</li>`);
+                $("#nameInputId").val("");
+            }
+        })
     })
 });
