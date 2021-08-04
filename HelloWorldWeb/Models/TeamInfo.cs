@@ -20,6 +20,5 @@ namespace HelloWorldWeb.Models
         /// Gets or sets team members.
         /// </summary>
         public List<string> TeamMembers { get; set; }
-
     }
 }

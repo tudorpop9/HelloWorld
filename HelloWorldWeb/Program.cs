@@ -18,11 +18,20 @@ namespace HelloWorldWeb
     /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main method which starts the applicatin.
+        /// </summary>
+        /// <param name="args">Program argument list.</param>
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
         }
 
+        /// <summary>
+        /// Web app host builder.
+        /// </summary>
+        /// <param name="args">Program argument list.</param>
+        /// <returns>Returns an implementation of IHostBuilder.</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
