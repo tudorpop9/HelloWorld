@@ -1,14 +1,21 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+// <copyright file="Program.cs" company="Principal33">
+// Copyright (c) Principal33. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace HelloWorldWeb
 {
+    /// <summary>
+    /// A class that contains the main function.
+    /// </summary>
     public class Program
     {
         public static void Main(string[] args)
