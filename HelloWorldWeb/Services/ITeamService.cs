@@ -15,8 +15,8 @@ namespace HelloWorldWeb.Services
         /// <summary>
         /// Dummy comment.
         /// </summary>
-        /// <param name="newTeammate">what?.</param>
-        void AddTeamMember(string newTeammate);
+        /// <param name="newTeamMember">what?.</param>
+        int AddTeamMember(TeamMember newTeamMember);
 
         TeamInfo GetTeamInfo();
         void DeleteTeamMember(int index);

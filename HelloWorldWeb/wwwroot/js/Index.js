@@ -55,7 +55,7 @@ $(document).ready(function () {
                     },
                     success: (resultPost) => {
                         $("#teamMembersList").append(
-                            `<li class="member" id="${resultGet}">
+                            `<li class="member" id="${resultPost}">
                                 <span class="name">${newcomerName}</span>
                                 <span class="delete fa fa-remove" id="deleteMember"></span>
                                 <span class="edit fa fa-pencil"></span>

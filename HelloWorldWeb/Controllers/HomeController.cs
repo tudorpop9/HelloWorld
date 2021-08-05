@@ -39,9 +39,10 @@ namespace HelloWorldWeb.Controllers
         /// </summary>
         /// <param name="newTeammate">Name of the new team member.</param>
         [HttpPost]
-        public void AddTeamMember(string newTeammate)
+        public int AddTeamMember(string newTeammate)
         {
-            teamService.GetTeamInfo().TeamMembers.Add(newTeammate);
+            int newId = teamService.GetTeamInfo().TeamMembers.Count() + 1;
+            return teamService.AddTeamMember(new TeamMember(newId + 1, newTeammate));
         }
 
         /// <summary>

@@ -19,6 +19,6 @@ namespace HelloWorldWeb.Models
         /// <summary>
         /// Gets or sets team members.
         /// </summary>
-        public List<string> TeamMembers { get; set; }
+        public List<TeamMember> TeamMembers { get; set; }
     }
 }
