@@ -72,13 +72,13 @@ $(document).ready(function () {
 
 function setDelete() {
     $(".delete").off("click").click(function () {
-        var index = $("#deleteMember").parent().attr("id");
+        var id = $(this).parent().attr("id");
 
         $.ajax({
             method: "DELETE",
             url: "/Home/DeleteTeamMember",
             data: {
-                "index": index
+                "id": id
             },
             success: (result) => {
                 $(this).parent().remove();

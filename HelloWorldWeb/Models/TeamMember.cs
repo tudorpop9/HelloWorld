@@ -11,6 +11,8 @@ namespace HelloWorldWeb.Models
 {
     public class TeamMember
     {
+        private static int idCounter = 0;
+
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -19,6 +21,14 @@ namespace HelloWorldWeb.Models
         {
             this.Id = id;
             this.Name = name;
+        }
+
+        public TeamMember(string name)
+        {
+            this.Id = idCounter;
+            this.Name = name;
+
+            idCounter++;
         }
 
     }

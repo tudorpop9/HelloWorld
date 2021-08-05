@@ -27,13 +27,20 @@ namespace HelloWorldWeb.Services
                 Name = "Team1",
                 TeamMembers = new List<TeamMember>(),
             };
-            
-            teamInfo.TeamMembers.Add(new TeamMember(1, "Sorina"));
+
+/*            teamInfo.TeamMembers.Add(new TeamMember(1, "Sorina"));
             teamInfo.TeamMembers.Add(new TeamMember(2, "Ema"));
             teamInfo.TeamMembers.Add(new TeamMember(3, "Radu"));
             teamInfo.TeamMembers.Add(new TeamMember(4, "Patrick"));
             teamInfo.TeamMembers.Add(new TeamMember(5, "Tudor"));
-            teamInfo.TeamMembers.Add(new TeamMember(6, "Fineas"));
+            teamInfo.TeamMembers.Add(new TeamMember(6, "Fineas"));*/
+
+            teamInfo.TeamMembers.Add(new TeamMember("Sorina"));
+            teamInfo.TeamMembers.Add(new TeamMember("Ema"));
+            teamInfo.TeamMembers.Add(new TeamMember("Radu"));
+            teamInfo.TeamMembers.Add(new TeamMember("Patrick"));
+            teamInfo.TeamMembers.Add(new TeamMember("Tudor"));
+            teamInfo.TeamMembers.Add(new TeamMember("Fineas"));
         }
 
         /// <summary>
@@ -55,9 +62,29 @@ namespace HelloWorldWeb.Services
             return newTeamMember.Id;
         }
 
-        public void DeleteTeamMember(int index)
+        /// <inheritdoc/>
+        public void DeleteTeamMember(int id)
         {
-            this.teamInfo.TeamMembers.RemoveAt(index);
+            TeamMember teamMember = this.GetTeamMemberById(id);
+            if (teamMember != null)
+            {
+                this.teamInfo.TeamMembers.Remove(teamMember);
+            }
+
+        }
+
+        /// <inheritdoc/>
+        public TeamMember GetTeamMemberById(int id)
+        {
+            foreach (TeamMember member in this.teamInfo.TeamMembers)
+            {
+                if (member.Id == id)
+                {
+                    return member;
+                }
+            }
+
+            return null;
         }
     }
 }

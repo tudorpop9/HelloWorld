@@ -41,8 +41,9 @@ namespace HelloWorldWeb.Controllers
         [HttpPost]
         public int AddTeamMember(string newTeammate)
         {
-            int newId = teamService.GetTeamInfo().TeamMembers.Count() + 1;
-            return teamService.AddTeamMember(new TeamMember(newId + 1, newTeammate));
+/*            int newId = teamService.GetTeamInfo().TeamMembers.Count() + 1;
+            return teamService.AddTeamMember(new TeamMember(newId + 1, newTeammate));*/
+            return teamService.AddTeamMember(new TeamMember(newTeammate));
         }
 
         /// <summary>
@@ -56,9 +57,9 @@ namespace HelloWorldWeb.Controllers
         }
 
         [HttpDelete]
-        public void DeleteTeamMember(int index)
+        public void DeleteTeamMember(int id)
         {
-            this.teamService.DeleteTeamMember(index);
+            this.teamService.DeleteTeamMember(id);
         }
 
         /// <summary>
