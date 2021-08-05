@@ -1,5 +1,14 @@
 ﻿// This JS file now uses jQuery. Pls see here: https://jquery.com/
 $(document).ready(function () {
+    $('#nameInputId').on('input change', function () {
+        if ($(this).val() != '') {
+            $('#addMemberButtonId').prop('disabled', false);
+        } else {
+            $('#addMemberButtonId').prop('disabled', true);
+        }
+    });
+
+
     // see https://api.jquery.com/click/
     $("#addMemberButtonId").click(function () {
         var newcomerName = $("#nameInputId").val();
@@ -19,7 +28,10 @@ $(document).ready(function () {
                 </li>`
                 );
                 $("#nameInputId").val("");
+                $('#addMemberButtonId').prop('disabled', true);
             }
         })
     })
+
+   
 });
