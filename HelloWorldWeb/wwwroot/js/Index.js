@@ -8,6 +8,10 @@ $(document).ready(function () {
         }
     });
 
+    $("#clearButton").click(function () {
+        $("#nameInputId").val("");
+        $('#addMemberButtonId').prop('disabled', true);
+    });
 
     // see https://api.jquery.com/click/
     $("#addMemberButtonId").click(function () {
@@ -33,5 +37,6 @@ $(document).ready(function () {
         })
     })
 
+   
    
 });
