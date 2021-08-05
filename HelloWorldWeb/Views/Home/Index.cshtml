@@ -7,6 +7,9 @@
 @section Scripts {
     <script src="~/js/Index.js"></script>
 }
+@section AdditionalStyles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+}
 
 <div class="text-center">
     <h1 class="display-4">Our Team</h1>
@@ -17,7 +20,9 @@
             var member = Model.TeamMembers[i];
 
             <li class="member">
-                @member
+                <span class="name">@member</span>
+                <span class="delete fa fa-remove"></span>
+                <span class="edit fa fa-pencil"></span>
             </li>
 
         }
