@@ -31,5 +31,17 @@ namespace HelloWorldWeb.Models
             idCounter++;
         }
 
+        public static int GetIdCounter()
+        {
+            return idCounter;
+        }
+
+        public override bool Equals(object obj)
+        {
+            TeamMember comparableMember = (TeamMember)obj;
+            return this.Id.Equals(comparableMember.Id) &&
+                   this.Name.Equals(comparableMember.Name);
+        }
+
     }
 }

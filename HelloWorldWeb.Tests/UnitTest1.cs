@@ -13,15 +13,13 @@ namespace HelloWorldWeb.Tests
         public void AddTeamMemberToTheTeam()
         {
             // Assume
-
             ITeamService teamService = new TeamService();
 
             // Act
-
-            teamService.AddTeamMember("George");
+            teamService.AddTeamMember(new Models.TeamMember("George"));
 
             // Assert
-            Assert.Equal(6, teamService.GetTeamInfo().TeamMembers.Count);
+            Assert.Equal(7, teamService.GetTeamInfo().TeamMembers.Count);
         }
     }
 }
