@@ -54,6 +54,12 @@ namespace HelloWorldWeb.Controllers
             return teamService.GetTeamInfo().TeamMembers.Count();
         }
 
+        [HttpDelete]
+        public void DeleteTeamMember(int index)
+        {
+            this.teamService.DeleteTeamMember(index);
+        }
+
         /// <summary>
         /// Loads the Index page.
         /// </summary>

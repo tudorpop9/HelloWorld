@@ -19,18 +19,17 @@
         {
             var member = Model.TeamMembers[i];
 
-            <li class="member">
+            <li class="member" id="@i">
                 <span class="name">@member</span>
-                <span class="delete fa fa-remove"></span>
+                <span class="delete fa fa-remove" id="deleteMember"></span>
                 <span class="edit fa fa-pencil"></span>
             </li>
-
         }
     </ul>
 
     <label for="nameInputId">New member</label>
     <input id="nameInputId" type="text" placeholder="e.g Tudor" />
     <button class="btn btn-primary" disabled="disabled" id="addMemberButtonId">Add</button>
-    <button id="clearButton" title="Clear">Clear</button>
+    <button class="btn btn-primary" id="clearButton" title="Clear">Clear</button>
 </div>
 
