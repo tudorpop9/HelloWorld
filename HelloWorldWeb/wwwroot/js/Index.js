@@ -55,7 +55,40 @@ $(document).ready(function () {
         $('#editClassmate').attr("member-id", id);
         $('#classmateName').val(currentName);
         $('#editClassmate').modal("show");
+
+        
     })
+
+    $("#editClassmate").on("click", "#submitEdit", function () {
+        var targetMemberTag = $(this).closest('li');
+
+        var memberId = $('#editClassmate').attr("member-id");
+        var newName = $('#classmateName').val();
+
+        $.ajax({
+            method: "POST",
+            url: "/Home/UpdateTeamMember",
+            data: {
+                "memberId": memberId,
+                "memberName": newName
+            },
+            success: (resultPost) => {
+                if (resultPost != -1) {
+                    console.log('Update executed succesfuly ');
+                    targetMemberTag.text(newName);
+                }
+            }
+        })
+        
+    })
+
+
+    $("#editClassmate").on("click", "#cancelEdit", function () {
+        console.log('cancel changes');
+    })
+
+
+    
 
 });
 
