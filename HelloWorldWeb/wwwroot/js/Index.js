@@ -75,7 +75,7 @@ $(document).ready(function () {
             success: (resultPost) => {
                 if (resultPost != -1) {
                     console.log('Update executed succesfuly ');
-                    targetMemberTag.text(newName);
+                    location.reload();
                 }
             }
         })
