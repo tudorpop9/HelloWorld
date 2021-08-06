@@ -112,5 +112,25 @@ namespace HelloWorldWeb.Tests
             // Assert
             Assert.Null(teamService.GetTeamMemberById(givenId));
         }
+
+
+        [Fact]
+        public void UpdateExistingMemberTest()
+        {
+            // Assume
+            ITeamService teamService = new TeamService();
+            int givenId = 2000;
+            string newName = "Andrei";
+            TeamMember newTeamMember = new TeamMember(givenId, "Cthulhu");
+            teamService.AddTeamMember(newTeamMember);
+
+            // Act
+            int returnedId = teamService.UpdateTeamMember(givenId, newName);
+            TeamMember memberReference = teamService.GetTeamMemberById(givenId);
+
+            // Assert
+            Assert.Equal(returnedId, givenId);
+            Assert.Equal(newName, memberReference.Name);
+        }
     }
 }

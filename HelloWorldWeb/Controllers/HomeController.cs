@@ -47,6 +47,18 @@ namespace HelloWorldWeb.Controllers
         }
 
         /// <summary>
+        /// Post endpoint which adds a new team member.
+        /// </summary>
+        /// <param name="memberName">New name of the team member.</param>
+        /// <param name="memberId">Unique identifier for the team member.</param>
+        /// <returns>memberId on succes or -1 on if the member was not found.</returns>
+        [HttpPost]
+        public int UpdateTeamMember(int memberId, string memberName)
+        {
+            return teamService.UpdateTeamMember(memberId, memberName);
+        }
+
+        /// <summary>
         /// Get endpoint which returns the number of team members.
         /// </summary>
         /// <returns>Number of team members.</returns>

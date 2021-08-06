@@ -18,6 +18,8 @@ namespace HelloWorldWeb.Services
         /// <param name="newTeamMember">what?.</param>
         int AddTeamMember(TeamMember newTeamMember);
 
+        int UpdateTeamMember(int memberId, string memberName);
+
         TeamInfo GetTeamInfo();
 
         void DeleteTeamMember(int id);

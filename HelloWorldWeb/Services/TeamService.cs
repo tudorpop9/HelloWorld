@@ -28,13 +28,6 @@ namespace HelloWorldWeb.Services
                 TeamMembers = new List<TeamMember>(),
             };
 
-/*            teamInfo.TeamMembers.Add(new TeamMember(1, "Sorina"));
-            teamInfo.TeamMembers.Add(new TeamMember(2, "Ema"));
-            teamInfo.TeamMembers.Add(new TeamMember(3, "Radu"));
-            teamInfo.TeamMembers.Add(new TeamMember(4, "Patrick"));
-            teamInfo.TeamMembers.Add(new TeamMember(5, "Tudor"));
-            teamInfo.TeamMembers.Add(new TeamMember(6, "Fineas"));*/
-
             teamInfo.TeamMembers.Add(new TeamMember("Sorina"));
             teamInfo.TeamMembers.Add(new TeamMember("Ema"));
             teamInfo.TeamMembers.Add(new TeamMember("Radu"));
@@ -85,6 +78,20 @@ namespace HelloWorldWeb.Services
             }
 
             return null;
+        }
+
+        public int UpdateTeamMember(int memberId, string memberName)
+        {
+            int returnId = -1;
+            TeamMember existingMember = this.GetTeamMemberById(memberId);
+
+            if (existingMember != null)
+            {
+                existingMember.Name = memberName;
+                returnId = memberId;
+            }
+
+            return returnId;
         }
     }
 }
