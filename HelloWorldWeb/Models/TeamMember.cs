@@ -43,5 +43,7 @@ namespace HelloWorldWeb.Models
                    this.Name.Equals(comparableMember.Name);
         }
 
+
+
     }
 }

@@ -16,30 +16,6 @@ $(document).ready(function () {
         $('#addMemberButtonId').prop('disabled', true);
     });
 
-  /*  // see https://api.jquery.com/click/
-    $("#addMemberButtonId").click(function () {
-        var newcomerName = $("#nameInputId").val();
-
-        $.ajax({
-            method: "POST",
-            url: "/Home/AddTeamMember",
-            data: {
-                "newTeammate": newcomerName
-            },
-            success: (result) => {
-                $("#teamMembersList").append(
-                `<li class="member">
-                    <span class="name">${newcomerName}</span>
-                    <span class="delete fa fa-remove"></span>
-                    <span class="edit fa fa-pencil"></span>
-                </li>`
-                );
-                $("#nameInputId").val("");
-                $('#addMemberButtonId').prop('disabled', true);
-            }
-        })
-    })*/
-
     $("#addMemberButtonId").click(function () {
         var newcomerName = $("#nameInputId").val();
         $.ajax({
@@ -67,7 +43,20 @@ $(document).ready(function () {
                 })
             }
         });
+    });
+
+    $("#teamMembersList").on("click", ".edit", function () {
+        var targetMemberTag = $(this).closest('li');
+
+        var id = targetMemberTag.attr('id');
+
+        var currentName = targetMemberTag.find(".name").text();
+
+        $('#editClassmate').attr("member-id", id);
+        $('#classmateName').val(currentName);
+        $('#editClassmate').modal("show");
     })
+
 });
 
 function setDelete() {
