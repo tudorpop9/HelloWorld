@@ -147,7 +147,7 @@ namespace HelloWorldWeb.Tests
             TeamMember memberReference = teamService.GetTeamMemberById(givenId);
 
             // Assert
-            Assert.NotNull(memberReference);
+            Assert.Null(memberReference);
             Assert.Equal(expectedId, returnedId);
         }
     }
