@@ -150,5 +150,23 @@ namespace HelloWorldWeb.Tests
             Assert.Null(memberReference);
             Assert.Equal(expectedId, returnedId);
         }
+
+
+        // test function from Sorina
+        [Fact]
+        public void CheckIdProblemTest()
+        {
+            //Assume
+            ITeamService teamService = new TeamService();
+            var memberToBeDeleted = teamService.GetTeamInfo().TeamMembers[teamService.GetTeamInfo().TeamMembers.Count - 2];
+            var newMemberName = "Boris";
+            //Act
+            teamService.DeleteTeamMember(memberToBeDeleted.Id);
+            var id = teamService.AddTeamMember(new TeamMember(newMemberName));
+            teamService.DeleteTeamMember(id);
+            //Assert
+            var member = teamService.GetTeamInfo().TeamMembers.Find(element => element.Name == newMemberName);
+            Assert.Null(member);
+        }
     }
 }
