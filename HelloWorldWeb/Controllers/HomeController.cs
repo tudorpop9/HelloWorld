@@ -21,6 +21,7 @@ namespace HelloWorldWeb.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly ITeamService teamService;
+        private readonly ITimeService timeService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
@@ -28,10 +29,11 @@ namespace HelloWorldWeb.Controllers
         /// </summary>
         /// <param name="logger"> Necesary parameter for superclass.</param>
         /// <param name="teamService"> Team service param.</param>
-        public HomeController(ILogger<HomeController> logger, ITeamService teamService)
+        public HomeController(ILogger<HomeController> logger, ITeamService teamService, ITimeService timeService)
         {
             this.logger = logger;
             this.teamService = teamService;
+            this.timeService = timeService;
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace HelloWorldWeb.Controllers
         {
 /*            int newId = teamService.GetTeamInfo().TeamMembers.Count() + 1;
             return teamService.AddTeamMember(new TeamMember(newId + 1, newTeammate));*/
-            return teamService.AddTeamMember(new TeamMember(newTeammate));
+            return teamService.AddTeamMember(new TeamMember(newTeammate, timeService));
         }
 
         /// <summary>

@@ -16,6 +16,7 @@ namespace HelloWorldWeb.Services
     public class TeamService : ITeamService
     {
         private TeamInfo teamInfo;
+        private ITimeService timeService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamService"/> class.
@@ -28,12 +29,12 @@ namespace HelloWorldWeb.Services
                 TeamMembers = new List<TeamMember>(),
             };
 
-            teamInfo.TeamMembers.Add(new TeamMember("Sorina"));
-            teamInfo.TeamMembers.Add(new TeamMember("Ema"));
-            teamInfo.TeamMembers.Add(new TeamMember("Radu"));
-            teamInfo.TeamMembers.Add(new TeamMember("Patrick"));
-            teamInfo.TeamMembers.Add(new TeamMember("Tudor"));
-            teamInfo.TeamMembers.Add(new TeamMember("Fineas"));
+            teamInfo.TeamMembers.Add(new TeamMember("Sorina", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Ema", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Radu", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Patrick", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Tudor", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Fineas", timeService));
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using HelloWorldWeb.Models;
+using HelloWorldWeb.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,21 @@ namespace HelloWorldWeb.Tests
 {
     public class TeamMemberTests
     {
+        private ITimeService timeService;
+
+        public TeamMemberTests()
+        {
+            timeService = new FakeTimeService();
+        }
+
         [Fact]
         public void TestEqualsTrue()
         {
             // Assume
 
             // Act
-            TeamMember member1 = new TeamMember(0, "Tudor");
-            TeamMember member2 = new TeamMember(0, "Tudor");
+            TeamMember member1 = new TeamMember(0, "Tudor", timeService);
+            TeamMember member2 = new TeamMember(0, "Tudor", timeService);
 
             // Assert
             Assert.True(member1.Equals(member2));
@@ -29,8 +37,8 @@ namespace HelloWorldWeb.Tests
             // Assume
 
             // Act
-            TeamMember member1 = new TeamMember(0, "Tudor");
-            TeamMember member2 = new TeamMember(1, "Tudor");
+            TeamMember member1 = new TeamMember(0, "Tudor", timeService);
+            TeamMember member2 = new TeamMember(1, "Tudor", timeService);
 
             // Assert
             Assert.False(member1.Equals(member2));
@@ -42,8 +50,8 @@ namespace HelloWorldWeb.Tests
             // Assume
 
             // Act
-            TeamMember member1 = new TeamMember(0, "Tudor");
-            TeamMember member2 = new TeamMember(0, "Cioara");
+            TeamMember member1 = new TeamMember(0, "Tudor", timeService);
+            TeamMember member2 = new TeamMember(0, "Cioara", timeService);
 
             // Assert
             Assert.False(member1.Equals(member2));
@@ -56,7 +64,7 @@ namespace HelloWorldWeb.Tests
             int idCounter = TeamMember.GetIdCounter();
 
             // Act
-            TeamMember member1 = new TeamMember("Tudor");
+            TeamMember member1 = new TeamMember("Tudor", timeService);
 
             // Assert
             Assert.Equal(idCounter + 1, TeamMember.GetIdCounter());
@@ -66,7 +74,7 @@ namespace HelloWorldWeb.Tests
         public void TestGetAgeEqual()
         {
             // Assume
-            TeamMember teamMember = new TeamMember("Ioan");
+            TeamMember teamMember = new TeamMember("Ioan", timeService);
             teamMember.BirthDate = new DateTime(2000, 01, 01);
             int expectedAge = 21;
 
@@ -81,7 +89,7 @@ namespace HelloWorldWeb.Tests
         public void TestGetAgeNotEqual()
         {
             // Assume
-            TeamMember teamMember = new TeamMember("Ioan");
+            TeamMember teamMember = new TeamMember("Ioan", timeService);
             teamMember.BirthDate = new DateTime(2000, 01, 01);
             int expectedAge = 1;
 
@@ -90,6 +98,14 @@ namespace HelloWorldWeb.Tests
 
             // Assert
             Assert.NotEqual(expectedAge, computedAge);
+        }
+    }
+
+    internal class FakeTimeService : ITimeService
+    {
+        public DateTime Now()
+        {
+            return new DateTime(2021, 08, 11);
         }
     }
 }

@@ -2,6 +2,7 @@
 // Copyright (c) Principal33. All rights reserved.
 // </copyright>
 
+using HelloWorldWeb.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,20 +13,23 @@ namespace HelloWorldWeb.Models
     public class TeamMember
     {
         private static int idCounter = 0;
+        private readonly ITimeService timeService;
 
         public int Id { get; set; }
 
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
 
-        public TeamMember(int id, string name)
+        public TeamMember(int id, string name, ITimeService timeService)
         {
+            this.timeService = timeService;
             this.Id = id;
             this.Name = name;
         }
 
-        public TeamMember(string name)
+        public TeamMember(string name, ITimeService timeService)
         {
+            this.timeService = timeService;
             this.Id = idCounter;
             this.Name = name;
 
@@ -44,7 +48,7 @@ namespace HelloWorldWeb.Models
             birthDate = this.BirthDate;
 
             DateTime zeroTime = new DateTime(1, 1, 1);
-            age = DateTime.Now - birthDate;
+            age = timeService.Now() - birthDate;
             int years = (zeroTime + age).Year - 1;
 
             return years;

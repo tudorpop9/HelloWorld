@@ -7,6 +7,8 @@ namespace HelloWorldWeb.Tests
 {
     public class TeamServiceTest
     {
+        private ITimeService timeService;
+
         /// <summary>
         /// Assume // Act // Assert
         /// </summary>
@@ -17,7 +19,7 @@ namespace HelloWorldWeb.Tests
             ITeamService teamService = new TeamService();
 
             // Act
-            teamService.AddTeamMember(new Models.TeamMember("George"));
+            teamService.AddTeamMember(new Models.TeamMember("George", timeService));
 
             // Assert
             Assert.Equal(7, teamService.GetTeamInfo().TeamMembers.Count);
@@ -59,11 +61,11 @@ namespace HelloWorldWeb.Tests
             int givenId = 100;
 
             // Act
-            teamService.AddTeamMember(new TeamMember(givenId, "Cat"));
+            teamService.AddTeamMember(new TeamMember(givenId, "Cat", timeService));
             TeamMember member = teamService.GetTeamMemberById(givenId);
 
             // Assert
-            Assert.True(member.Equals(new TeamMember(givenId, "Cat")));
+            Assert.True(member.Equals(new TeamMember(givenId, "Cat", timeService)));
         }
 
         [Fact]
@@ -88,7 +90,7 @@ namespace HelloWorldWeb.Tests
 
 
             // Act
-            TeamMember newTeamMember = new TeamMember("Cthulhu");
+            TeamMember newTeamMember = new TeamMember("Cthulhu", timeService);
             teamService.AddTeamMember(newTeamMember);
             teamService.DeleteTeamMember(newTeamMember.Id);
 
@@ -105,7 +107,7 @@ namespace HelloWorldWeb.Tests
             int givenId = 2000;
 
             // Act
-            TeamMember newTeamMember = new TeamMember(givenId, "Cthulhu");
+            TeamMember newTeamMember = new TeamMember(givenId, "Cthulhu", timeService);
             teamService.AddTeamMember(newTeamMember);
             teamService.DeleteTeamMember(givenId);
 
@@ -121,7 +123,7 @@ namespace HelloWorldWeb.Tests
             ITeamService teamService = new TeamService();
             int givenId = 2000;
             string newName = "Andrei";
-            TeamMember newTeamMember = new TeamMember(givenId, "Cthulhu");
+            TeamMember newTeamMember = new TeamMember(givenId, "Cthulhu", timeService);
             teamService.AddTeamMember(newTeamMember);
 
             // Act
@@ -162,7 +164,7 @@ namespace HelloWorldWeb.Tests
             var newMemberName = "Boris";
             //Act
             teamService.DeleteTeamMember(memberToBeDeleted.Id);
-            var id = teamService.AddTeamMember(new TeamMember(newMemberName));
+            var id = teamService.AddTeamMember(new TeamMember(newMemberName, timeService));
             teamService.DeleteTeamMember(id);
             //Assert
             var member = teamService.GetTeamInfo().TeamMembers.Find(element => element.Name == newMemberName);

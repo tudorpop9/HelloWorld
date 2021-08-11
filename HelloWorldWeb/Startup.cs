@@ -45,6 +45,7 @@ namespace HelloWorldWeb
         {
             services.AddControllersWithViews();
             services.AddSingleton<ITeamService>(new TeamService());
+            services.AddSingleton<ITimeService>(new TimeService());
         }
 
         /// <summary>
@@ -81,4 +82,5 @@ namespace HelloWorldWeb
             });
         }
     }
+
 }
