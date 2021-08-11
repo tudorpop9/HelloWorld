@@ -16,6 +16,7 @@ namespace HelloWorldWeb.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public TeamMember(int id, string name)
         {
@@ -34,6 +35,19 @@ namespace HelloWorldWeb.Models
         public static int GetIdCounter()
         {
             return idCounter;
+        }
+
+        public int getAge()
+        {
+            TimeSpan age;
+            DateTime birthDate;
+            birthDate = this.BirthDate;
+
+            DateTime zeroTime = new DateTime(1, 1, 1);
+            age = DateTime.Now - birthDate;
+            int years = (zeroTime + age).Year - 1;
+
+            return years;
         }
 
         public override bool Equals(object obj)
