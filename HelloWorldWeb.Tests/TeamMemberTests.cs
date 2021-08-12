@@ -1,5 +1,6 @@
 ﻿using HelloWorldWeb.Models;
 using HelloWorldWeb.Services;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,15 @@ namespace HelloWorldWeb.Tests
 {
     public class TeamMemberTests
     {
-        private ITimeService timeService;
+        private readonly ITimeService timeService;
 
         public TeamMemberTests()
         {
-            timeService = new FakeTimeService();
+            var mock = new Mock<ITimeService>();
+           
+            mock.Setup(_ => _.Now()).Returns(new DateTime(2021, 08, 11));
+
+            timeService = mock.Object;
         }
 
         [Fact]
@@ -71,7 +76,7 @@ namespace HelloWorldWeb.Tests
         }
 
         [Fact]
-        public void TestGetAgeEqual()
+        public void TestGetAge()
         {
             // Assume
             TeamMember teamMember = new TeamMember("Ioan", timeService);
@@ -83,29 +88,6 @@ namespace HelloWorldWeb.Tests
 
             // Assert
             Assert.Equal(expectedAge, computedAge);
-        }
-
-        [Fact]
-        public void TestGetAgeNotEqual()
-        {
-            // Assume
-            TeamMember teamMember = new TeamMember("Ioan", timeService);
-            teamMember.BirthDate = new DateTime(2000, 01, 01);
-            int expectedAge = 1;
-
-            // Act
-            int computedAge = teamMember.getAge();
-
-            // Assert
-            Assert.NotEqual(expectedAge, computedAge);
-        }
-    }
-
-    internal class FakeTimeService : ITimeService
-    {
-        public DateTime Now()
-        {
-            return new DateTime(2021, 08, 11);
         }
     }
 }
