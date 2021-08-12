@@ -19,5 +19,10 @@ namespace HelloWorldWeb.Models
         public WeatherType Type { get; set; }
 
         public DateTime Day{ get; set; }
+
+        public static float kelvinToCelsius(float kelvinVal)
+        {
+            return kelvinVal - 273.15f;
+        }
     }
 }
