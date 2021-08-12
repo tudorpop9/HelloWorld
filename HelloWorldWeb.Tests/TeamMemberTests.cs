@@ -93,7 +93,7 @@ namespace HelloWorldWeb.Tests
 
             // Assert
             Assert.Equal(expectedAge, computedAge);
-            Mock.Get(timeService).Verify(_ => _.Now());
+            Mock.Get(timeService).Verify(_ => _.Now(), Times.Once());
         }
     }
 }
