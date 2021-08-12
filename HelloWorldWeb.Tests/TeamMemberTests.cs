@@ -12,19 +12,21 @@ namespace HelloWorldWeb.Tests
 {
     public class TeamMemberTests
     {
-        private readonly ITimeService timeService;
-
+        private ITimeService timeService;
+        private Mock<ITimeService> timeMock;
         public TeamMemberTests()
         {
-            var mock = new Mock<ITimeService>();
-           
-            mock.Setup(_ => _.Now()).Returns(new DateTime(2021, 08, 11));
+            
+        }
 
-            timeService = mock.Object;
+        private void InitializeTimeServiceMock()
+        {
+            timeMock = new Mock<ITimeService>();
+            timeMock.Setup(_ => _.Now()).Returns(new DateTime(2021, 08, 11));
         }
 
         [Fact]
-        public void TestEqualsTrue()
+        public void TestEquals()
         {
             // Assume
 
@@ -79,6 +81,9 @@ namespace HelloWorldWeb.Tests
         public void TestGetAge()
         {
             // Assume
+            InitializeTimeServiceMock();
+            timeService = timeMock.Object;
+
             TeamMember teamMember = new TeamMember("Ioan", timeService);
             teamMember.BirthDate = new DateTime(2000, 01, 01);
             int expectedAge = 21;
@@ -88,6 +93,7 @@ namespace HelloWorldWeb.Tests
 
             // Assert
             Assert.Equal(expectedAge, computedAge);
+            Mock.Get(timeService).Verify(_ => _.Now());
         }
     }
 }
