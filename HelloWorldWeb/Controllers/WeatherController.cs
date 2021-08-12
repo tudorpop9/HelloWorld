@@ -46,15 +46,51 @@ namespace HelloWorldWeb.Controllers
             foreach (var item in jsonArray.Take(7))
             {
                 //TODO: convert item to a DailyWeatherRecord
-                long unixDateTime = item.Value<long>("dt");
+                
+                
+                
+
                 DailyWeatherRecord dailyWeatherRecord = new DailyWeatherRecord(new DateTime(2021, 08, 12), 22.0f, WeatherType.Mild);
+
                 // DateTime.Date to dismiss hour,minutes and seconds
+                long unixDateTime = item.Value<long>("dt");
                 dailyWeatherRecord.Day = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).DateTime.Date;
+
+                var tempField = item.SelectToken("temp");
+                dailyWeatherRecord.Temperature = tempField.Value<float>("day");
+
+                var weatherTypeString = item.SelectToken("weather")[0].Value<string>("description");
+                dailyWeatherRecord.Type = Convert(weatherTypeString);
 
                 result.Add(dailyWeatherRecord);
             }
 
             return result;
+        }
+
+        private WeatherType Convert(string weatherTypeString)
+        {
+            WeatherType weather;
+
+            switch (weatherTypeString)
+            {
+                case "few clouds":
+                    weather = WeatherType.FewClouds;
+                    break;
+
+                case "light rain":
+                    weather = WeatherType.LighRain;
+                    break;
+
+                case "broken clouds":
+                    weather = WeatherType.BrokenClouds;
+                    break;
+
+                default:
+                    throw new Exception($"Unkown weather type {weatherTypeString}.");
+            }
+
+            return weather;
         }
 
         // GET api/<WeatherController>/5
