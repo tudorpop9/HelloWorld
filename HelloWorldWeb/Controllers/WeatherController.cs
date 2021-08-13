@@ -52,7 +52,7 @@ namespace HelloWorldWeb.Controllers
 
             if (json["daily"] == null)
             {
-                throw new Exception("Api key is not valid");
+                throw new Exception($"Api key is not valid: {json["daily"]}.");
             }
             var jsonArray = json["daily"].Take(7);
 
