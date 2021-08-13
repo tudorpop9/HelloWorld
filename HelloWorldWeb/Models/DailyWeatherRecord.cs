@@ -7,6 +7,8 @@ namespace HelloWorldWeb.Models
 {
     public class DailyWeatherRecord
     {
+
+        public const float KELVIN_CELSIUS_DIFFERENCE = 273.15f;
         public DailyWeatherRecord(DateTime day, float temperature, WeatherType type)
         {
             Day = day;
@@ -22,7 +24,7 @@ namespace HelloWorldWeb.Models
 
         public static float KelvinToCelsius(float kelvinVal)
         {
-            return kelvinVal - 273.15f;
+            return kelvinVal - KELVIN_CELSIUS_DIFFERENCE;
         }
     }
 }
