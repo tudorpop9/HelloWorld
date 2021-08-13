@@ -26,7 +26,7 @@ namespace HelloWorldWeb.Tests
             
             var firstDay = result.First();
             Assert.Equal(new DateTime(2021, 08, 12), firstDay.Day);
-            Assert.Equal(DailyWeatherRecord.kelvinToCelsius(297.88f), firstDay.Temperature);
+            Assert.Equal(DailyWeatherRecord.KelvinToCelsius(297.88f), firstDay.Temperature);
             Assert.Equal(WeatherType.FewClouds, firstDay.Type);
         }
     }

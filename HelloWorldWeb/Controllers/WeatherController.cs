@@ -42,30 +42,23 @@ namespace HelloWorldWeb.Controllers
 
             List<DailyWeatherRecord> result = new List<DailyWeatherRecord>();
             var jsonArray = json["daily"];
-
-            foreach (var item in jsonArray.Take(7))
-            {
-                //TODO: convert item to a DailyWeatherRecord
-                
-                
-                
-
-                DailyWeatherRecord dailyWeatherRecord = new DailyWeatherRecord(new DateTime(2021, 08, 12), 22.0f, WeatherType.Mild);
-
-                // DateTime.Date to dismiss hour,minutes and seconds
-                long unixDateTime = item.Value<long>("dt");
-                dailyWeatherRecord.Day = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).DateTime.Date;
-
-                var tempField = item.SelectToken("temp");
-                dailyWeatherRecord.Temperature = DailyWeatherRecord.kelvinToCelsius(tempField.Value<float>("day"));
-
-                var weatherTypeString = item.SelectToken("weather")[0].Value<string>("description");
-                dailyWeatherRecord.Type = ConvertToWeatherType(weatherTypeString);
-
-                result.Add(dailyWeatherRecord);
-            }
-
+            result.AddRange(jsonArray.Take(7).Select(CreateDailyWeatherRecordFromJToken));
             return result;
+        }
+
+        private DailyWeatherRecord CreateDailyWeatherRecordFromJToken(JToken item)
+        {
+            // DateTime.Date to dismiss hour,minutes and seconds
+            long unixDateTime = item.Value<long>("dt");
+            DateTime forecastDay = DateTimeOffset.FromUnixTimeSeconds(unixDateTime).DateTime.Date;
+
+            var tempField = item.SelectToken("temp");
+            float forecastTemperature = DailyWeatherRecord.KelvinToCelsius(tempField.Value<float>("day"));
+
+            var weatherTypeString = item.SelectToken("weather")[0].Value<string>("description");
+            WeatherType forecastType = ConvertToWeatherType(weatherTypeString);
+
+            return new DailyWeatherRecord(forecastDay, forecastTemperature, forecastType);
         }
 
         private WeatherType ConvertToWeatherType(string weatherTypeString)
