@@ -1,5 +1,6 @@
 ﻿using HelloWorldWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
@@ -15,9 +16,18 @@ namespace HelloWorldWeb.Controllers
     [ApiController]
     public class WeatherController : ControllerBase
     {
-        private readonly string latitude = "46.7700";
-        private readonly string longitude = "23.5800";
-        private readonly string apiKey = "537221f38b987a406521718bec389b6c";
+        private readonly string latitude;
+        private readonly string longitude;
+        private readonly string apiKey;
+        private readonly IWeatherControllerSettings settings;
+
+        public WeatherController(IWeatherControllerSettings settings)
+        {
+            this.settings = settings;
+            latitude = settings.Latitude;
+            longitude = settings.Longitude;
+            apiKey = settings.ApiKey;
+        }
 
         // GET: api/<WeatherController>
         [HttpGet]
@@ -39,6 +49,11 @@ namespace HelloWorldWeb.Controllers
         public IEnumerable<DailyWeatherRecord> ConvertResponseToWeatherRecordList(string content)
         {
             var json = JObject.Parse(content);
+
+            if (json["daily"] == null)
+            {
+                throw new Exception("Api key is not valid");
+            }
             var jsonArray = json["daily"].Take(7);
 
             return jsonArray.Select(CreateDailyWeatherRecordFromJToken);
