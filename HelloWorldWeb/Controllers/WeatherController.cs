@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace HelloWorldWeb.Controllers
 {
+    /// <summary>
+    /// Fetches data from openweather API.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class WeatherController : ControllerBase
