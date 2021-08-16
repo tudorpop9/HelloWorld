@@ -42,8 +42,9 @@ namespace HelloWorldWeb.Models
             return this.Id.Equals(comparableMember.Id) &&
                    this.Name.Equals(comparableMember.Name);
         }
-
-
-
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

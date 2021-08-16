@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HelloWorldWeb</name>
+    </assembly>
+    <members>
+        <member name="T:HelloWorldWeb.Controllers.HomeController">
+            <summary>
+            Home controller.
+            </summary>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{HelloWorldWeb.Controllers.HomeController},HelloWorldWeb.Services.ITeamService,HelloWorldWeb.Services.ITimeService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:HelloWorldWeb.Controllers.HomeController"/> class.
+            Home controller constructor.
+            </summary>
+            <param name="logger"> Necesary parameter for superclass.</param>
+            <param name="teamService"> Team service param.</param>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.AddTeamMember(System.String)">
+            <summary>
+            Post endpoint which adds a new team member.
+            </summary>
+            <param name="newTeammate">Name of the new team member.</param>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.UpdateTeamMember(System.Int32,System.String)">
+            <summary>
+            Post endpoint which adds a new team member.
+            </summary>
+            <param name="memberName">New name of the team member.</param>
+            <param name="memberId">Unique identifier for the team member.</param>
+            <returns>memberId on succes or -1 on if the member was not found.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.GetTeamCount">
+            <summary>
+            Get endpoint which returns the number of team members.
+            </summary>
+            <returns>Number of team members.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.Index">
+            <summary>
+            Loads the Index page.
+            </summary>
+            <returns>Returns an implementation of IActionResult which has the teamInfo member.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.Privacy">
+            <summary>
+            Loads the privacy page.
+            </summary>
+            <returns>Returns an implementation of IActionResult.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.Error">
+            <summary>
+            Loads an error page.
+            </summary>
+            <returns>Returns an implementation of IActionResult which cotains error informations.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.WeatherController.Get(System.Int32)">
+            <summary>
+            Get a weather forecast for the day in specified amount of days from now.
+            </summary>
+            <param name="index">Amount of days from now (from 0 to 6).</param>
+            <returns>The weather forecast.</returns>
+        </member>
+        <member name="T:HelloWorldWeb.Models.ErrorViewModel">
+            <summary>
+            Error view model.
+            </summary>
+        </member>
+        <member name="P:HelloWorldWeb.Models.ErrorViewModel.RequestId">
+            <summary>
+            Gets or sets requestId property.
+            Dummy commment.
+            </summary>
+        </member>
+        <member name="P:HelloWorldWeb.Models.ErrorViewModel.ShowRequestId">
+            <summary>
+            Gets a value indicating whether someting happened.
+            dummy comment for lambda function.
+            </summary>
+        </member>
+        <member name="T:HelloWorldWeb.Models.TeamInfo">
+            <summary>
+            Custom team info class.
+            </summary>
+        </member>
+        <member name="P:HelloWorldWeb.Models.TeamInfo.Name">
+            <summary>
+            Gets or sets team name.
+            </summary>
+        </member>
+        <member name="P:HelloWorldWeb.Models.TeamInfo.TeamMembers">
+            <summary>
+            Gets or sets team members.
+            </summary>
+        </member>
+        <member name="T:HelloWorldWeb.Program">
+            <summary>
+            A class that contains the main function.
+            </summary>
+        </member>
+        <member name="M:HelloWorldWeb.Program.Main(System.String[])">
+            <summary>
+            Main method which starts the applicatin.
+            </summary>
+            <param name="args">Program argument list.</param>
+        </member>
+        <member name="M:HelloWorldWeb.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Web app host builder.
+            </summary>
+            <param name="args">Program argument list.</param>
+            <returns>Returns an implementation of IHostBuilder.</returns>
+        </member>
+        <member name="T:HelloWorldWeb.Services.ITeamService">
+            <summary>
+            Dummy comment.
+            </summary>
+        </member>
+        <member name="M:HelloWorldWeb.Services.ITeamService.AddTeamMember(HelloWorldWeb.Models.TeamMember)">
+            <summary>
+            Dummy comment.
+            </summary>
+            <param name="newTeamMember">what?.</param>
+        </member>
+        <member name="T:HelloWorldWeb.Services.TeamService">
+            <summary>
+            Team service class.
+            </summary>
+        </member>
+        <member name="M:HelloWorldWeb.Services.TeamService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:HelloWorldWeb.Services.TeamService"/> class.
+            </summary>
+        </member>
+        <member name="M:HelloWorldWeb.Services.TeamService.GetTeamInfo">
+            <summary>
+            Dummy comment.
+            </summary>
+            <returns>Retruns TeamInfo object.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Services.TeamService.AddTeamMember(HelloWorldWeb.Models.TeamMember)">
+            <summary>
+            Adds a new team member
+            </summary>
+            <param name="newTeamMember"> newTeammate name</param>
+        </member>
+        <member name="M:HelloWorldWeb.Services.TeamService.DeleteTeamMember(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:HelloWorldWeb.Services.TeamService.GetTeamMemberById(System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="T:HelloWorldWeb.Startup">
+            <summary>
+            Dummy comment.
+            </summary>
+        </member>
+        <member name="M:HelloWorldWeb.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:HelloWorldWeb.Startup"/> class.
+            Dummy comment.
+            </summary>
+            <param name="configuration">Constructor parameter.</param>
+        </member>
+        <member name="P:HelloWorldWeb.Startup.Configuration">
+            <summary>
+            Gets the configuration property.
+            Dummy comment.
+            </summary>
+        </member>
+        <member name="M:HelloWorldWeb.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services">Metohd paramerter.</param>
+        </member>
+        <member name="M:HelloWorldWeb.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app">App parameter.</param>
+            <param name="env">Env parameter.</param>
+        </member>
+    </members>
+</doc>
