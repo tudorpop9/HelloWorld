@@ -8,3 +8,18 @@ dotnet_diagnostic.IDE0076.severity = none
 
 # CS1591: Missing XML comment for publicly visible type or member
 dotnet_diagnostic.CS1591.severity = none
+
+# CS1587: XML comment is not placed on a valid language element
+dotnet_diagnostic.CS1587.severity = none
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1310: Field names should not contain underscore
+dotnet_diagnostic.SA1310.severity = none
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+
+# SA1602: Enumeration items should be documented
+dotnet_diagnostic.SA1602.severity = none

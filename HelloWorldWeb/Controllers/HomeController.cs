@@ -1,5 +1,5 @@
-﻿// <copyright file="HomeController.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
+﻿// <copyright file="HomeController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 using System;
@@ -29,6 +29,7 @@ namespace HelloWorldWeb.Controllers
         /// </summary>
         /// <param name="logger"> Necesary parameter for superclass.</param>
         /// <param name="teamService"> Team service param.</param>
+        /// <param name="timeService">Time service param.</param>
         public HomeController(ILogger<HomeController> logger, ITeamService teamService, ITimeService timeService)
         {
             this.logger = logger;
@@ -40,6 +41,7 @@ namespace HelloWorldWeb.Controllers
         /// Post endpoint which adds a new team member.
         /// </summary>
         /// <param name="newTeammate">Name of the new team member.</param>
+        /// <returns>TeamMember id.</returns>
         [HttpPost]
         public int AddTeamMember(string newTeammate)
         {
@@ -51,8 +53,8 @@ namespace HelloWorldWeb.Controllers
         /// <summary>
         /// Post endpoint which adds a new team member.
         /// </summary>
-        /// <param name="memberName">New name of the team member.</param>
         /// <param name="memberId">Unique identifier for the team member.</param>
+        /// <param name="memberName">New name of the team member.</param>
         /// <returns>memberId on succes or -1 on if the member was not found.</returns>
         [HttpPost]
         public int UpdateTeamMember(int memberId, string memberName)
@@ -70,6 +72,10 @@ namespace HelloWorldWeb.Controllers
             return teamService.GetTeamInfo().TeamMembers.Count();
         }
 
+        /// <summary>
+        /// Deletes a memeber.
+        /// </summary>
+        /// <param name="id">MemberId that needs to be deleted.</param>
         [HttpDelete]
         public void DeleteTeamMember(int id)
         {

@@ -1,11 +1,15 @@
-﻿using HelloWorldWeb.Models;
-using HelloWorldWeb.Services;
-using Moq;
+﻿// <copyright file="TeamMemberTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HelloWorldWeb.Models;
+using HelloWorldWeb.Services;
+using Moq;
 using Xunit;
 
 namespace HelloWorldWeb.Tests
@@ -14,15 +18,9 @@ namespace HelloWorldWeb.Tests
     {
         private ITimeService timeService;
         private Mock<ITimeService> timeMock;
+
         public TeamMemberTests()
         {
-            
-        }
-
-        private void InitializeTimeServiceMock()
-        {
-            timeMock = new Mock<ITimeService>();
-            timeMock.Setup(_ => _.Now()).Returns(new DateTime(2021, 08, 11));
         }
 
         [Fact]
@@ -89,11 +87,17 @@ namespace HelloWorldWeb.Tests
             int expectedAge = 21;
 
             // Act
-            int computedAge = teamMember.getAge();
+            int computedAge = teamMember.GetAge();
 
             // Assert
             Assert.Equal(expectedAge, computedAge);
             Mock.Get(timeService).Verify(_ => _.Now(), Times.Once());
+        }
+
+        private void InitializeTimeServiceMock()
+        {
+            timeMock = new Mock<ITimeService>();
+            timeMock.Setup(_ => _.Now()).Returns(new DateTime(2021, 08, 11));
         }
     }
 }

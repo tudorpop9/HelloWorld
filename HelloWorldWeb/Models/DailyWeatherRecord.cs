@@ -1,14 +1,21 @@
-﻿using System;
+﻿// <copyright file="DailyWeatherRecord.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace HelloWorldWeb.Models
 {
+    /// <summary>
+    /// Daily record object.
+    /// </summary>
     public class DailyWeatherRecord
     {
-
         public const float KELVIN_CELSIUS_DIFFERENCE = 273.15f;
+
         public DailyWeatherRecord(DateTime day, float temperature, WeatherType type)
         {
             Day = day;
@@ -20,7 +27,7 @@ namespace HelloWorldWeb.Models
 
         public WeatherType Type { get; set; }
 
-        public DateTime Day{ get; set; }
+        public DateTime Day { get; set; }
 
         public static float KelvinToCelsius(float kelvinVal)
         {

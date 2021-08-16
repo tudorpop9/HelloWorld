@@ -1,6 +1,9 @@
+// <copyright file="TeamServiceTest.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using HelloWorldWeb.Models;
 using HelloWorldWeb.Services;
-using System;
 using Xunit;
 
 namespace HelloWorldWeb.Tests
@@ -10,7 +13,7 @@ namespace HelloWorldWeb.Tests
         private ITimeService timeService = null;
 
         /// <summary>
-        /// Assume // Act // Assert
+        /// Assume // Act // Assert.
         /// </summary>
         [Fact]
         public void AddTeamMemberToTheTeam()
@@ -30,7 +33,7 @@ namespace HelloWorldWeb.Tests
         {
             // Assume
             ITeamService teamService = new TeamService();
-            int existingId= teamService.GetTeamInfo().TeamMembers[0].Id;
+            int existingId = teamService.GetTeamInfo().TeamMembers[0].Id;
 
             // Act
             TeamMember member = teamService.GetTeamMemberById(existingId);
@@ -88,7 +91,6 @@ namespace HelloWorldWeb.Tests
             // Assume
             ITeamService teamService = new TeamService();
 
-
             // Act
             TeamMember newTeamMember = new TeamMember("Cthulhu", timeService);
             teamService.AddTeamMember(newTeamMember);
@@ -97,7 +99,6 @@ namespace HelloWorldWeb.Tests
             // Assert
             Assert.Null(teamService.GetTeamMemberById(newTeamMember.Id));
         }
-
 
         [Fact]
         public void DeleteNewMemberByGivenIdTest()
@@ -114,7 +115,6 @@ namespace HelloWorldWeb.Tests
             // Assert
             Assert.Null(teamService.GetTeamMemberById(givenId));
         }
-
 
         [Fact]
         public void UpdateExistingMemberTest()
@@ -153,20 +153,21 @@ namespace HelloWorldWeb.Tests
             Assert.Equal(expectedId, returnedId);
         }
 
-
         // test function from Sorina
         [Fact]
         public void CheckIdProblemTest()
         {
-            //Assume
+            // Assume
             ITeamService teamService = new TeamService();
             var memberToBeDeleted = teamService.GetTeamInfo().TeamMembers[teamService.GetTeamInfo().TeamMembers.Count - 2];
-            var newMemberName = "Boris";
-            //Act
+            var newMemberName = "Borys";
+
+            // Act
             teamService.DeleteTeamMember(memberToBeDeleted.Id);
             var id = teamService.AddTeamMember(new TeamMember(newMemberName, timeService));
             teamService.DeleteTeamMember(id);
-            //Assert
+
+            // Assert
             var member = teamService.GetTeamInfo().TeamMembers.Find(element => element.Name == newMemberName);
             Assert.Null(member);
         }

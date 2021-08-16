@@ -1,12 +1,12 @@
-﻿// <copyright file="Member.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
+﻿// <copyright file="TeamMember.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using HelloWorldWeb.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HelloWorldWeb.Services;
 
 namespace HelloWorldWeb.Models
 {
@@ -14,11 +14,6 @@ namespace HelloWorldWeb.Models
     {
         private static int idCounter = 0;
         private readonly ITimeService timeService;
-
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-        public DateTime BirthDate { get; set; }
 
         public TeamMember(int id, string name, ITimeService timeService)
         {
@@ -36,12 +31,18 @@ namespace HelloWorldWeb.Models
             idCounter++;
         }
 
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public DateTime BirthDate { get; set; }
+
         public static int GetIdCounter()
         {
             return idCounter;
         }
 
-        public int getAge()
+        public int GetAge()
         {
             TimeSpan age;
             DateTime birthDate;
@@ -61,7 +62,9 @@ namespace HelloWorldWeb.Models
                    this.Name.Equals(comparableMember.Name);
         }
 
-
-
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -1,16 +1,17 @@
-﻿using HelloWorldWeb.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json.Linq;
-using RestSharp;
+﻿// <copyright file="WeatherController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using HelloWorldWeb.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using RestSharp;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 /// <summary>
-/// Fetches data from <see href = "https://openweathermap.org/api" > OpenweatherAPI.
+/// Fetches data from <see href = "https://openweathermap.org/api" > OpenweatherAPI </see>.
 /// </summary>
 namespace HelloWorldWeb.Controllers
 {
@@ -23,6 +24,11 @@ namespace HelloWorldWeb.Controllers
         private readonly string apiKey;
         private readonly IWeatherControllerSettings settings;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WeatherController"/> class.
+        /// Configures api call parameters.
+        /// </summary>
+        /// <param name="settings">Extracted settings form config file.</param>
         public WeatherController(IWeatherControllerSettings settings)
         {
             this.settings = settings;
@@ -32,6 +38,11 @@ namespace HelloWorldWeb.Controllers
         }
 
         // GET: api/<WeatherController>
+
+        /// <summary>
+        /// Gets daily records.
+        /// </summary>
+        /// <returns> A list of daily records.</returns>
         [HttpGet]
         public IEnumerable<DailyWeatherRecord> Get()
         {
@@ -44,10 +55,13 @@ namespace HelloWorldWeb.Controllers
             IRestResponse response = client.Execute(request);
 
             return ConvertResponseToWeatherRecordList(response.Content);
-
-           
         }
 
+        /// <summary>
+        /// Doc.
+        /// </summary>
+        /// <param name="content">.</param>
+        /// <returns>..</returns>
         [NonAction]
         public IEnumerable<DailyWeatherRecord> ConvertResponseToWeatherRecordList(string content)
         {
@@ -57,9 +71,23 @@ namespace HelloWorldWeb.Controllers
             {
                 throw new Exception($"Api key is not valid: {json["daily"]}.");
             }
+
             var jsonArray = json["daily"].Take(7);
 
             return jsonArray.Select(CreateDailyWeatherRecordFromJToken);
+        }
+
+        // GET api/<WeatherController>/5
+
+        /// <summary>
+        /// Get a weather forecast for the day in specified amount of days from now.
+        /// </summary>
+        /// <param name="index">Amount of days from now (from 0 to 6).</param>
+        /// <returns>The weather forecast.</returns>
+        [HttpGet("{index}")]
+        public string Get(int index)
+        {
+            return "value";
         }
 
         private DailyWeatherRecord CreateDailyWeatherRecordFromJToken(JToken item)
@@ -83,7 +111,6 @@ namespace HelloWorldWeb.Controllers
 
             switch (weatherTypeString)
             {
-
                 case "thunderstorm with light rain":
                     weather = WeatherType.ThunderstormWithLightRain;
                     break;
@@ -148,186 +175,149 @@ namespace HelloWorldWeb.Controllers
                     weather = WeatherType.HeavyIntensityDrizzleRain;
                     break;
 
-
                 case "shower rain and drizzle":
                     weather = WeatherType.ShowerRainAndDrizzle;
                     break;
-
 
                 case "heavy shower rain and drizzle":
                     weather = WeatherType.HeavyShowerRainAndDrizzle;
                     break;
 
-
                 case "shower drizzle":
                     weather = WeatherType.ShowerDrizzle;
                     break;
-
 
                 case "light rain":
                     weather = WeatherType.LightRain;
                     break;
 
-
                 case "moderate rain":
                     weather = WeatherType.ModerateRain;
                     break;
-
 
                 case "heavy intensity rain":
                     weather = WeatherType.HeavyIntensityRain;
                     break;
 
-
                 case "very heavy rain":
                     weather = WeatherType.VeryHeavyRain;
                     break;
-
 
                 case "extreme rain":
                     weather = WeatherType.ExtremeRain;
                     break;
 
-
                 case "freezing rain":
                     weather = WeatherType.FreezingRain;
                     break;
-
 
                 case "light intensity shower rain":
                     weather = WeatherType.LightIntensityShowerRain;
                     break;
 
-
                 case "shower rain":
                     weather = WeatherType.ShowerRain;
                     break;
-
 
                 case "heavy intensity shower rain":
                     weather = WeatherType.HeavyIntensityShowerRain;
                     break;
 
-
                 case "ragged shower rain":
                     weather = WeatherType.RaggedShowerRain;
                     break;
-
 
                 case "light snow":
                     weather = WeatherType.LightSnow;
                     break;
 
-
                 case "Heavy snow":
                     weather = WeatherType.HeavySnow;
                     break;
-
 
                 case "Sleet":
                     weather = WeatherType.Sleet;
                     break;
 
-
                 case "Light shower sleet":
                     weather = WeatherType.LightShowerSleet;
                     break;
-
 
                 case "Shower sleet":
                     weather = WeatherType.ShowerSleet;
                     break;
 
-
                 case "Light rain and snow":
                     weather = WeatherType.LightRainAndSnow;
                     break;
-
 
                 case "Rain and snow":
                     weather = WeatherType.RainAndSnow;
                     break;
 
-
                 case "Light shower snow":
                     weather = WeatherType.LightShowerSnow;
                     break;
-
 
                 case "Shower snow":
                     weather = WeatherType.ShowerSnow;
                     break;
 
-
                 case "Heavy shower snow":
                     weather = WeatherType.HeavyShowerSnow;
                     break;
-
 
                 case "mist":
                     weather = WeatherType.Mist;
                     break;
 
-
                 case "Haze":
                     weather = WeatherType.Haze;
                     break;
-
 
                 case "sand/ dust whirls":
                     weather = WeatherType.SandDustWhirls;
                     break;
 
-
                 case "fog":
                     weather = WeatherType.Fog;
                     break;
-
 
                 case "sand":
                     weather = WeatherType.Sand;
                     break;
 
-
                 case "dust":
                     weather = WeatherType.Dust;
                     break;
-
 
                 case "volcanic ash":
                     weather = WeatherType.VolcanicAsh;
                     break;
 
-
                 case "squalls":
                     weather = WeatherType.Squalls;
                     break;
-
 
                 case "tornado":
                     weather = WeatherType.Tornado;
                     break;
 
-
                 case "clear sky":
                     weather = WeatherType.ClearSky;
                     break;
-
 
                 case "few clouds":
                     weather = WeatherType.FewClouds;
                     break;
 
-
                 case "scattered clouds":
                     weather = WeatherType.ScatteredClouds;
                     break;
 
-
                 case "broken clouds":
                     weather = WeatherType.BrokenClouds;
                     break;
-
 
                 case "overcast clouds":
                     weather = WeatherType.OvercastClouds;
@@ -339,19 +329,5 @@ namespace HelloWorldWeb.Controllers
 
             return weather;
         }
-
-        // GET api/<WeatherController>/5
-        /// <summary>
-        /// Get a weather forecast for the day in specified amount of days from now.
-        /// </summary>
-        /// <param name="index">Amount of days from now (from 0 to 6).</param>
-        /// <returns>The weather forecast.</returns>
-        [HttpGet("{index}")]
-        public string Get(int index)
-        {
-            return "value";
-        }
-
-        
     }
 }

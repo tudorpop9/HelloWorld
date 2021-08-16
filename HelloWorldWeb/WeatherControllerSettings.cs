@@ -1,5 +1,5 @@
-﻿// <copyright file="Startup.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
+﻿// <copyright file="WeatherControllerSettings.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 using HelloWorldWeb.Controllers;
@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace HelloWorldWeb
 {
+    /// <summary>
+    /// Class that extracts date from config file.
+    /// </summary>
     public class WeatherControllerSettings : IWeatherControllerSettings
     {
         public WeatherControllerSettings(IConfiguration config)
@@ -17,7 +20,9 @@ namespace HelloWorldWeb
         }
 
         public string Latitude { get; set; }
+
         public string Longitude { get; set; }
+
         public string ApiKey { get; set; }
     }
 }

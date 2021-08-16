@@ -1,5 +1,5 @@
-// <copyright file="Startup.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
+// <copyright file="Startup.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 using System;
@@ -60,7 +60,7 @@ namespace HelloWorldWeb
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath, includeControllerXmlComments : true);
+                c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
             });
         }
 
@@ -73,7 +73,6 @@ namespace HelloWorldWeb
         {
             if (env.IsDevelopment())
             {
-                
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
                 app.UseDeveloperExceptionPage();
@@ -101,5 +100,4 @@ namespace HelloWorldWeb
             });
         }
     }
-
 }

@@ -1,12 +1,9 @@
-﻿// <copyright file="TeamService.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
+﻿// <copyright file="TeamService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-using HelloWorldWeb.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using HelloWorldWeb.Models;
 
 namespace HelloWorldWeb.Services
 {
@@ -16,7 +13,7 @@ namespace HelloWorldWeb.Services
     public class TeamService : ITeamService
     {
         private TeamInfo teamInfo;
-        private ITimeService timeService;
+        private ITimeService timeService = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamService"/> class.
@@ -47,9 +44,10 @@ namespace HelloWorldWeb.Services
         }
 
         /// <summary>
-        /// Adds a new team member
+        /// Adds a new team member.
         /// </summary>
-        /// <param name="newTeamMember"> newTeammate name</param>
+        /// <param name="newTeamMember"> newTeammate name.</param>
+        /// <returns> Returns new member id.</returns>.
         public int AddTeamMember(TeamMember newTeamMember)
         {
             teamInfo.TeamMembers.Add(newTeamMember);
@@ -64,7 +62,6 @@ namespace HelloWorldWeb.Services
             {
                 this.teamInfo.TeamMembers.Remove(teamMember);
             }
-
         }
 
         /// <inheritdoc/>

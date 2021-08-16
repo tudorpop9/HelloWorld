@@ -1,5 +1,5 @@
-// <copyright file="Program.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
+// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
 using System;
@@ -36,10 +36,10 @@ namespace HelloWorldWeb
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var port = Environment.GetEnvironmentVariable("PORT");
-
-                    webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://*:" + port);
+                    /*var port = Environment.GetEnvironmentVariable("PORT");
+                    */
+                    webBuilder.UseStartup<Startup>();
+                    /*.UseUrls("http://*:" + port);*/
                 });
     }
 }
