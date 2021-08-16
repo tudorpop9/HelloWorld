@@ -10,6 +10,7 @@ WORKDIR /src
 COPY ["./HelloWorldWeb.csproj", "HelloWorldWeb/"]
 RUN dotnet restore "HelloWorldWeb/HelloWorldWeb.csproj"
 COPY . ./HelloWorldWeb
+COPY . ./stylecop.json
 WORKDIR "/src/HelloWorldWeb"
 RUN dotnet build "HelloWorldWeb.csproj" -c Release -o /app/build
 
