@@ -7,7 +7,7 @@ namespace HelloWorldWeb.Tests
 {
     public class TeamServiceTest
     {
-        private ITimeService timeService;
+        private ITimeService timeService = null;
 
         /// <summary>
         /// Assume // Act // Assert
