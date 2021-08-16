@@ -9,12 +9,11 @@ using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
+/// <summary>
+/// Fetches data from <see href = "https://openweathermap.org/api" > OpenweatherAPI.
+/// </summary>
 namespace HelloWorldWeb.Controllers
 {
-    /// <summary>
-    /// Fetches data from openweather API.
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class WeatherController : ControllerBase
