@@ -2,7 +2,16 @@
 Backend course
 
 ## How to create a docker container and image of the project.
-TO DO..
+TO DO.. in HelloWorldWeb
+```
+docker build . -t tudor_hello_world_app 
+
+```
+
+```
+docker run -d -p 8081:80 --name tudor_hello_world_container tudor_hello_world_app
+
+```
 
 ## How to deploy to Heroku
 1. Create heroku account
