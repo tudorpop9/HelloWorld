@@ -16,6 +16,10 @@ namespace HelloWorldWeb.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
+        public TeamMember()
+        {
+
+        }
 
         public TeamMember(int id, string name)
         {
