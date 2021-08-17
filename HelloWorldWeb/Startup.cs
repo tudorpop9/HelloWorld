@@ -48,7 +48,8 @@ namespace HelloWorldWeb
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    /*Configuration.GetConnectionString("DefaultConnection")));*/
+                    Configuration.GetConnectionString("HerokuOriginalConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
