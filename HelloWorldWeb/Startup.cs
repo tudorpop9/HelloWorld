@@ -46,10 +46,10 @@ namespace HelloWorldWeb
         /// <param name="services">Metohd paramerter.</param>
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
-            /* Configuration.GetConnectionString("DefaultConnection")));*/
-            Configuration.GetConnectionString("PostgresHerokuConnection")));
+            ObtainConnectionString()));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -89,6 +89,32 @@ namespace HelloWorldWeb
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+
+        public static string convertHerokuConnToAspNetConnString(string herokuConnectionString)
+        {
+            var databaseUri = new Uri(herokuConnectionString);
+
+            // Username is on index 0 and password is on index 1
+            string[] userInfo = databaseUri.UserInfo.Split(":");
+
+            // "/dbName" => "dbName"
+            string databaseName = databaseUri.AbsolutePath.TrimStart('/');
+
+            return $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseName};User Id={userInfo[0]};Password={userInfo[1]};Pooling=true;SSL Mode=Require;TrustServerCertificate=True;Include Error Detail=True;";
+        }
+
+        // returns dbConnectionString from DATABASE_URL environment variable, or the PostgresHerokuConnection if the variable is not initialized
+        private string ObtainConnectionString()
+        {
+            string envVarDbString = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+            if (envVarDbString == null)
+            {
+                return Configuration.GetConnectionString("DefaultConnection");
+            }
+
+            return convertHerokuConnToAspNetConnString(envVarDbString);
         }
     }
 }
