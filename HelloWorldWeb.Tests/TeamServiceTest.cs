@@ -66,7 +66,8 @@ namespace HelloWorldWeb.Tests
             Assert.True(member.Equals(new TeamMember(givenId, "Cat")));
         }
 
-        [Fact]
+
+        [Fact(Skip = "Skip test as an exercise")]
         public void DeleteDefaultMemberByIdTest()
         {
             // Assume

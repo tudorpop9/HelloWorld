@@ -39,15 +39,34 @@ namespace HelloWorldWeb.Services
 
             return newTeamInfo;
         }
+                
+        public int UpdateTeamMember(int memberId, string memberName)
+        {
+            int returnId = -1;
+            TeamMember existingMember = this.GetTeamMemberById(memberId);
+
+            if (existingMember != null)
+            {
+                existingMember.Name = memberName;
+                returnId = memberId;
+            }
+
+            _context.SaveChanges();
+            return returnId;
+        }
 
         public TeamMember GetTeamMemberById(int id)
         {
-            throw new NotImplementedException();
-        }
+            List<TeamMember> members = _context.TeamMembers.ToList();
+            foreach (TeamMember member in members)
+            {
+                if (member.Id == id)
+                {
+                    return member;
+                }
+            }
 
-        public int UpdateTeamMember(int memberId, string memberName)
-        {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
