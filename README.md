@@ -41,12 +41,12 @@ heroku container:login
 
 Build the Dockerfile in the current directory and push the Docker image, "pta-hello-world-container-p33" is the heroku application name.
 ```
-heroku container:push pta-hello-world-container-p33 web
+heroku container:push -a pta-hello-world-container-p33 web
 
 ```
 
 Release the newly pushed images to deploy the app.
 ```
-heroku container:release pta-hello-world-container-p33 web
+heroku container:release -a pta-hello-world-container-p33 web
 
 ```
