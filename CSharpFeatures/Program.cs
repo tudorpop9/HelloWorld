@@ -21,8 +21,38 @@ namespace CSharpFeatures
 
             TeamMember teamMemberDeserialized = JsonSerializer.Deserialize<TeamMember>(expectedOutput);
             Console.WriteLine(teamMemberDeserialized);
-            
 
+            Coffee coffee = MakeCoffee("grains", "milk", "water", "sugar", Espresso);
+            Console.WriteLine($"Here's your coffee: {coffee.CoffeeType}");
+
+        }
+
+        static Coffee MakeCoffee(string coffeeGrains, string milk, string water, string sugar, 
+            Func<string, string, string, string, Coffee> recipe)
+        {
+            Coffee coffee = null;
+            try
+            {
+                Console.WriteLine("Start preparing coffee.");
+                coffee = recipe(coffeeGrains, milk, water, sugar);
+                
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                Console.WriteLine("Finished.");
+            }
+            return coffee;
+        }
+
+        static Coffee Espresso(string grains, string milk, string water, string sugar)
+        {
+            return new Coffee("Espresso");
         }
     }
 }
+
+
