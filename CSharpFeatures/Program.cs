@@ -22,8 +22,13 @@ namespace CSharpFeatures
             TeamMember teamMemberDeserialized = JsonSerializer.Deserialize<TeamMember>(expectedOutput);
             Console.WriteLine(teamMemberDeserialized);
 
-            Coffee coffee = MakeCoffee("grains", "milk", "water", "sugar", Espresso);
-            Console.WriteLine($"Here's your coffee: {coffee.CoffeeType}");
+            Console.Write("What type of coffee do you want ?\n");
+            var consoleInput = Console.ReadLine();
+            //var recipe = (consoleInput == "FlatWhite") ? FlatWhite : Espresso;
+            Func<string, string, string, string, Coffee> recipe = (consoleInput == "FlatWhite") ? FlatWhite : Espresso;
+
+            Coffee coffee = MakeCoffee("grains", "milk", "water", "sugar", recipe);
+            Console.WriteLine($"Here's your coffee: {coffee.CoffeeType}.");
 
         }
 
@@ -52,6 +57,13 @@ namespace CSharpFeatures
         {
             return new Coffee("Espresso");
         }
+
+        static Coffee FlatWhite(string grains, string milk, string water, string sugar)
+        {
+            return new Coffee("FlatWhite");
+        }
+
+
     }
 }
 
