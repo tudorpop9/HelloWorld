@@ -28,7 +28,15 @@ namespace CSharpFeatures
             Func<string, string, string, string, Coffee> recipe = (consoleInput == "FlatWhite") ? FlatWhite : Espresso;
 
             Coffee coffee = MakeCoffee("grains", "milk", "water", "sugar", recipe);
-            Console.WriteLine($"Here's your coffee: {coffee.CoffeeType}.");
+            
+            if(coffee != null)
+            {
+                Console.WriteLine($"Here's your coffee: {coffee.CoffeeType}.");
+            }
+            else
+            {
+                Console.WriteLine("Sorry, your order can't be completed..");
+            }
 
         }
 
@@ -42,9 +50,13 @@ namespace CSharpFeatures
                 coffee = recipe(coffeeGrains, milk, water, sugar);
                 
             }
-            catch
+            catch(RecipeUnavailableException e)
             {
-                throw;
+                Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Something went wrong, see exception details: {e.Message}");
             }
             finally
             {
@@ -55,6 +67,7 @@ namespace CSharpFeatures
 
         static Coffee Espresso(string grains, string milk, string water, string sugar)
         {
+            throw new ApplicationException();
             return new Coffee("Espresso");
         }
 
