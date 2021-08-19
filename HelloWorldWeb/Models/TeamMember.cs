@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace HelloWorldWeb.Models
 {
+    [DebuggerDisplay("{Name}[{Id}]")]
     public class TeamMember
     {
         private static int idCounter = 0;
@@ -49,6 +51,11 @@ namespace HelloWorldWeb.Models
         public override int GetHashCode()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return $"TeamMember Id: {this.Id}, Name: {this.Name}";
         }
     }
 }

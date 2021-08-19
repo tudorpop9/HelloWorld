@@ -9,12 +9,19 @@ namespace CSharpFeatures
     {
         static void Main(string[] args)
         {
+            string serializationFile = "./teamMember.json";
+
             TeamMember teamMember = new TeamMember("Member1");
             string jsonString = JsonSerializer.Serialize(teamMember);
-            File.WriteAllText("./teamMember.json", jsonString);
+            File.WriteAllText(serializationFile, jsonString);
 
-            TeamMember teamMemberDeserialized = JsonSerializer.Deserialize<TeamMember>(jsonString);
+            var teamMemberPromise = File.ReadAllTextAsync(serializationFile);
+            teamMemberPromise.Wait();
+            var expectedOutput = teamMemberPromise.Result;
+
+            TeamMember teamMemberDeserialized = JsonSerializer.Deserialize<TeamMember>(expectedOutput);
             Console.WriteLine(teamMemberDeserialized);
+            
 
         }
     }
