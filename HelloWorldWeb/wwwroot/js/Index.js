@@ -1,7 +1,19 @@
 ﻿// This JS file now uses jQuery. Pls see here: https://jquery.com/
 $(document).ready(function () {
 
+    var connection = new signalR.HubConnectionBuilder().withUrl("/messagehub").build();
     setDelete();
+
+    connection.on("NewTeamMemberAdded", function (teamMemberName, teamMemberId) {
+        console.log(`New team member added: ${teamMemberName} with id ${teamMemberId}`);
+        createNewcomer(teamMemberName, teamMemberId)
+    });
+
+    connection.start().then(function () {
+        console.log("signalr connected");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
 
     $('#nameInputId').on('input change', function () {
         if ($(this).val() != '') {
@@ -19,30 +31,23 @@ $(document).ready(function () {
     $("#addMemberButtonId").click(function () {
         var newcomerName = $("#nameInputId").val();
         $.ajax({
-            method: "GET",
-            url: "/Home/GetTeamCount",
-
-            success: (resultGet) => {
-                $.ajax({
-                    method: "POST",
-                    url: "/Home/AddTeamMember",
-                    data: {
-                        "newTeammate": newcomerName
-                    },
-                    success: (resultPost) => {
-                        $("#teamMembersList").append(
-                            `<li class="member" id="${resultPost}">
-                                <span class="name">${newcomerName}</span>
-                                <span class="delete fa fa-remove" id="deleteMember"></span>
-                                <span class="edit fa fa-pencil"></span>
-                             </li>`);
-                        $("#nameInputId").val("");
-                        $('#addMemberButtonId').prop('disabled', true);
-                        setDelete();
-                    }
-                })
+            method: "POST",
+            url: "/Home/AddTeamMember",
+            data: {
+                "newTeammate": newcomerName
+            },
+            success: (resultPost) => {
+                /* $("#teamMembersList").append(
+                     `<li class="member" id="${resultPost}">
+                         <span class="name">${newcomerName}</span>
+                         <span class="delete fa fa-remove" id="deleteMember"></span>
+                         <span class="edit fa fa-pencil"></span>
+                      </li>`);
+                 $("#nameInputId").val("");
+                 $('#addMemberButtonId').prop('disabled', true);
+                 setDelete();*/
             }
-        });
+        })
     });
 
     $("#teamMembersList").on("click", ".edit", function () {
@@ -108,4 +113,18 @@ function setDelete() {
         })
     }
     );
+}
+
+function createNewcomer(name, id) {
+    // Remember string interpolation
+    $("#teamMembersList").append(
+        `<li class="member" id="${id}">
+                <span class="name">${name}</span>
+                <span class="delete fa fa-remove" id="deleteMember"></span>
+                <span class="edit fa fa-pencil"></span>
+         </li>`);
+
+    $("#nameInputId").val("");
+    $('#addMemberButtonId').prop('disabled', true);
+    setDelete();
 }

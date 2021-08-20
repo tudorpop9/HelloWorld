@@ -48,7 +48,7 @@ namespace HelloWorldWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton<ITeamService>(new TeamService());
+            services.AddSingleton<ITeamService, TeamService>();
 
             services.AddSingleton<IWeatherControllerSettings, WeatherControllerSettings>();
             services.AddSingleton<ITimeService>(new TimeService());
