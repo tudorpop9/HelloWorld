@@ -109,5 +109,14 @@ namespace HelloWorldWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        /// <summary>
+        /// Creates the Chat view.
+        /// </summary>
+        /// <returns>Returns the chat view.</returns>
+        public IActionResult Chat()
+        {
+            return View();
+        }
     }
 }
