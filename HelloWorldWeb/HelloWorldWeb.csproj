@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Users\Tudor\Proiecte\Work\HelloWorld\HelloWorldWeb\HelloWorldWeb.xml</DocumentationFile>
+    <DocumentationFile>.\HelloWorldWeb.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
