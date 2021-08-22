@@ -175,7 +175,7 @@ namespace HelloWorldWeb.Tests
             Assert.Null(member);
         }
 
-        private void InitializeTimeServiceMock()
+        private void InitializeMessageHubMock()
         {
             // https://www.codeproject.com/Articles/1266538/Testing-SignalR-Hubs-in-ASP-NET-Core-2-1
             Mock<IClientProxy> hubAllClients = new Mock<IClientProxy>();
@@ -190,7 +190,7 @@ namespace HelloWorldWeb.Tests
         {
             if (messageHub == null)
             {
-                InitializeTimeServiceMock();
+                InitializeMessageHubMock();
             }
 
             return messageHub.Object;
