@@ -1,5 +1,5 @@
-﻿// <copyright file="TeamService.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="TeamService.cs" company="Principal33 Solutions">
+// Copyright (c) Principal33 Solutions. All rights reserved.
 // </copyright>
 
 using System.Collections.Generic;
@@ -13,13 +13,15 @@ namespace HelloWorldWeb.Services
     /// </summary>
     public class TeamService : ITeamService
     {
+        private readonly IHubContext<MessageHub> messageHub;
+
         private TeamInfo teamInfo;
         private ITimeService timeService = null;
-        private readonly IHubContext<MessageHub> messageHub;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamService"/> class.
         /// </summary>
+        /// <param name="messageHubContext"> Notifies cliets of data chages.</param>
         public TeamService(IHubContext<MessageHub> messageHubContext)
         {
             this.teamInfo = new TeamInfo

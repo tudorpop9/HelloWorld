@@ -1,4 +1,5 @@
 ﻿// This JS file now uses jQuery. Pls see here: https://jquery.com/
+'use strict';
 $(document).ready(function () {
 
     var connection = new signalR.HubConnectionBuilder().withUrl("/messagehub").build();
@@ -116,7 +117,7 @@ function setDelete() {
 }
 
 function createNewcomer(name, id) {
-    // Remember string interpolation
+    // Remember string interpolation in js: `text ${variable}`
     $("#teamMembersList").append(
         `<li class="member" id="${id}">
                 <span class="name">${name}</span>

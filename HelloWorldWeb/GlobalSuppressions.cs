@@ -1,5 +1,5 @@
-﻿// <copyright file="GlobalSuppressions.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="GlobalSuppressions.cs" company="Principal33 Solutions">
+// Copyright (c) Principal33 Solutions. All rights reserved.
 // </copyright>
 
 using System.Diagnostics.CodeAnalysis;

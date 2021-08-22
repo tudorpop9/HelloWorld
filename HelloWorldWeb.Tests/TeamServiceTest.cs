@@ -4,6 +4,8 @@
 
 using HelloWorldWeb.Models;
 using HelloWorldWeb.Services;
+using Microsoft.AspNetCore.SignalR;
+using Moq;
 using Xunit;
 
 namespace HelloWorldWeb.Tests
@@ -11,6 +13,7 @@ namespace HelloWorldWeb.Tests
     public class TeamServiceTest
     {
         private ITimeService timeService = null;
+        private Mock<IHubContext<MessageHub>> messageHub = null;
 
         /// <summary>
         /// Assume // Act // Assert.
@@ -19,7 +22,7 @@ namespace HelloWorldWeb.Tests
         public void AddTeamMemberToTheTeam()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
 
             // Act
             teamService.AddTeamMember(new Models.TeamMember("George", timeService));
@@ -32,7 +35,7 @@ namespace HelloWorldWeb.Tests
         public void GetItemByIdNotNull()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
             int existingId = teamService.GetTeamInfo().TeamMembers[0].Id;
 
             // Act
@@ -46,7 +49,7 @@ namespace HelloWorldWeb.Tests
         public void GetItemByIdNull()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
             int givenId = 1010101;
 
             // Act
@@ -60,7 +63,7 @@ namespace HelloWorldWeb.Tests
         public void GetItemByIdFound()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
             int givenId = 100;
 
             // Act
@@ -75,7 +78,7 @@ namespace HelloWorldWeb.Tests
         public void DeleteDefaultMemberByIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
             int idCounter = TeamMember.GetIdCounter();
 
             // Act
@@ -89,7 +92,7 @@ namespace HelloWorldWeb.Tests
         public void DeleteNewMemberByStaticIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
 
             // Act
             TeamMember newTeamMember = new TeamMember("Cthulhu", timeService);
@@ -104,7 +107,7 @@ namespace HelloWorldWeb.Tests
         public void DeleteNewMemberByGivenIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
             int givenId = 2000;
 
             // Act
@@ -120,7 +123,7 @@ namespace HelloWorldWeb.Tests
         public void UpdateExistingMemberTest()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
             int givenId = 2000;
             string newName = "Andrei";
             TeamMember newTeamMember = new TeamMember(givenId, "Cthulhu", timeService);
@@ -139,7 +142,7 @@ namespace HelloWorldWeb.Tests
         public void UpdateUnexistingMemberTest()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
             int givenId = 2500;
             int expectedId = -1;
             string newName = "Andrei";
@@ -158,7 +161,7 @@ namespace HelloWorldWeb.Tests
         public void CheckIdProblemTest()
         {
             // Assume
-            ITeamService teamService = new TeamService();
+            ITeamService teamService = new TeamService(GetMockedMessageHub());
             var memberToBeDeleted = teamService.GetTeamInfo().TeamMembers[teamService.GetTeamInfo().TeamMembers.Count - 2];
             var newMemberName = "Borys";
 
@@ -170,6 +173,27 @@ namespace HelloWorldWeb.Tests
             // Assert
             var member = teamService.GetTeamInfo().TeamMembers.Find(element => element.Name == newMemberName);
             Assert.Null(member);
+        }
+
+        private void InitializeTimeServiceMock()
+        {
+            // https://www.codeproject.com/Articles/1266538/Testing-SignalR-Hubs-in-ASP-NET-Core-2-1
+            Mock<IClientProxy> hubAllClients = new Mock<IClientProxy>();
+            Mock<IHubClients> hubClients = new Mock<IHubClients>();
+            hubClients.Setup(_ => _.All).Returns(hubAllClients.Object);
+            messageHub = new Mock<IHubContext<MessageHub>>();
+
+            messageHub.SetupGet(_ => _.Clients).Returns(hubClients.Object);
+        }
+
+        private IHubContext<MessageHub> GetMockedMessageHub()
+        {
+            if (messageHub == null)
+            {
+                InitializeTimeServiceMock();
+            }
+
+            return messageHub.Object;
         }
     }
 }

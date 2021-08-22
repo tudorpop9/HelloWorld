@@ -1,9 +1,9 @@
-﻿// <copyright file="Startup.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="MessageHub.cs" company="Principal33 Solutions">
+// Copyright (c) Principal33 Solutions. All rights reserved.
 // </copyright>
 
-using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 
 namespace HelloWorldWeb
 {
