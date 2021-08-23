@@ -70,6 +70,7 @@ namespace HelloWorldWeb.Services
             if (teamMember != null)
             {
                 this.teamInfo.TeamMembers.Remove(teamMember);
+                this.broadcastService.TeamMemberDeleted(id);
             }
         }
 

@@ -9,6 +9,7 @@ $(document).ready(function () {
         console.log("signalr connected");
     });
     connection.on("NewTeamMemberAdded", createNewcomer);
+    connection.on("DeleteTeamMember", deleteMember);
 
    
 
@@ -93,9 +94,6 @@ function setDelete() {
             data: {
                 "id": id
             },
-            success: (result) => {
-                $(this).parent().remove();
-            }
         })
     }
     );
@@ -114,3 +112,7 @@ function createNewcomer(name, id) {
     $('#addMemberButtonId').prop('disabled', true);
     setDelete();
 }
+
+var deleteMember = (id) => {
+    $(`li[id=${id}]`).remove();
+};
