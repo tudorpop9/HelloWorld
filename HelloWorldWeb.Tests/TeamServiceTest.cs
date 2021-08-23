@@ -181,6 +181,7 @@ namespace HelloWorldWeb.Tests
         {
             // Assume
             InitializeMessageHubMock();
+            hubAllClientsMock.Setup(_ => _.SendAsync("NewTeamMemberAdded", "Tudor", 2, It.IsAny<CancellationToken>()));
             var messageHub = messageHubMock.Object;
 
             // Act
