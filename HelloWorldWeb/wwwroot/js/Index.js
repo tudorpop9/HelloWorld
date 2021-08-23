@@ -10,6 +10,7 @@ $(document).ready(function () {
     });
     connection.on("NewTeamMemberAdded", createNewcomer);
     connection.on("DeleteTeamMember", deleteMember);
+    connection.on("UpdatedTeamMember", updateMember);
 
    
 
@@ -64,12 +65,6 @@ $(document).ready(function () {
                 "memberId": memberId,
                 "memberName": newName
             },
-            success: (resultPost) => {
-                if (resultPost != -1) {
-                    console.log('Update executed succesfuly ');
-                    location.reload();
-                }
-            }
         })
         
     })
@@ -116,3 +111,7 @@ function createNewcomer(name, id) {
 var deleteMember = (id) => {
     $(`li[id=${id}]`).remove();
 };
+
+var updateMember = (id, name) => {
+    $(`li[id=${id}]`).find(".name").text(name);
+}

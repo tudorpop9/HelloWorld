@@ -97,6 +97,7 @@ namespace HelloWorldWeb.Services
             {
                 existingMember.Name = memberName;
                 returnId = memberId;
+                this.broadcastService.UpdatedTeamMember(memberId, memberName);
             }
 
             return returnId;

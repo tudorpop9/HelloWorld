@@ -8,5 +8,6 @@ namespace HelloWorldWeb.Services
     {
         void NewTeamMemberAdded(string name, int id);
         void TeamMemberDeleted(int id);
+        void UpdatedTeamMember(int memberId, string memberName);
     }
 }

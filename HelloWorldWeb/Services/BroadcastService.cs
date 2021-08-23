@@ -24,5 +24,10 @@ namespace HelloWorldWeb.Services
         {
             messageHub.Clients.All.SendAsync("DeleteTeamMember", id);
         }
+
+        public void UpdatedTeamMember(int memberId, string memberName)
+        {
+            messageHub.Clients.All.SendAsync("UpdatedTeamMember", memberId, memberName);
+        }
     }
 }
