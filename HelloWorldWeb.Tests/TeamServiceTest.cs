@@ -67,7 +67,8 @@ namespace HelloWorldWeb.Tests
         public void GetItemByIdFound()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetBroadCastService());
+            var bcService = GetBroadCastService();
+            ITeamService teamService = new TeamService(bcService);
             int givenId = 100;
 
             // Act
@@ -76,6 +77,7 @@ namespace HelloWorldWeb.Tests
 
             // Assert
             Assert.True(member.Equals(new TeamMember(givenId, "Cat", timeService)));
+            Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
         }
 
         [Fact]
@@ -96,7 +98,8 @@ namespace HelloWorldWeb.Tests
         public void DeleteNewMemberByStaticIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetBroadCastService());
+            var bcService = GetBroadCastService();
+            ITeamService teamService = new TeamService(bcService);
 
             // Act
             TeamMember newTeamMember = new TeamMember("Cthulhu", timeService);
@@ -105,13 +108,15 @@ namespace HelloWorldWeb.Tests
 
             // Assert
             Assert.Null(teamService.GetTeamMemberById(newTeamMember.Id));
+            Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
         }
 
         [Fact]
         public void DeleteNewMemberByGivenIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetBroadCastService());
+            var bcService = GetBroadCastService();
+            ITeamService teamService = new TeamService(bcService);
             int givenId = 2000;
 
             // Act
@@ -121,13 +126,16 @@ namespace HelloWorldWeb.Tests
 
             // Assert
             Assert.Null(teamService.GetTeamMemberById(givenId));
+            Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+
         }
 
         [Fact]
         public void UpdateExistingMemberTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetBroadCastService());
+            var bcService = GetBroadCastService();
+            ITeamService teamService = new TeamService(bcService);
             int givenId = 2000;
             string newName = "Andrei";
             TeamMember newTeamMember = new TeamMember(givenId, "Cthulhu", timeService);
@@ -140,6 +148,8 @@ namespace HelloWorldWeb.Tests
             // Assert
             Assert.Equal(returnedId, givenId);
             Assert.Equal(newName, memberReference.Name);
+            Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+
         }
 
         [Fact]
@@ -165,7 +175,8 @@ namespace HelloWorldWeb.Tests
         public void CheckIdProblemTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetBroadCastService());
+            var bcService = GetBroadCastService();
+            ITeamService teamService = new TeamService(bcService);
             var memberToBeDeleted = teamService.GetTeamInfo().TeamMembers[teamService.GetTeamInfo().TeamMembers.Count - 2];
             var newMemberName = "Borys";
 
@@ -177,25 +188,27 @@ namespace HelloWorldWeb.Tests
             // Assert
             var member = teamService.GetTeamInfo().TeamMembers.Find(element => element.Name == newMemberName);
             Assert.Null(member);
+            Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+
         }
 
-       /* [Fact]
-        public void CheckLine60()
-        {
-            // Assume
-            InitializeMessageHubMock();
-            hubAllClientsMock.Setup(_ => _.SendAsync("NewTeamMemberAdded", "Tudor", 2, It.IsAny<CancellationToken>()));
-            var messageHub = messageHubMock.Object;
+        /* [Fact]
+         public void CheckLine60()
+         {
+             // Assume
+             InitializeMessageHubMock();
+             hubAllClientsMock.Setup(_ => _.SendAsync("NewTeamMemberAdded", "Tudor", 2, It.IsAny<CancellationToken>()));
+             var messageHub = messageHubMock.Object;
 
-            // Act
-            messageHub.Clients.All.SendAsync("NewTeamMemberAdded", "Tudor", 2);
+             // Act
+             messageHub.Clients.All.SendAsync("NewTeamMemberAdded", "Tudor", 2);
 
-            // Assert
-            //It.IsAny<string>()
-            hubAllClientsMock.Verify(hubAllClients => hubAllClients.SendAsync("NewTeamMemberAdded", "Tudor", 2, It.IsAny<CancellationToken>()), Times.Once(), "I expect SendAsync to be called once.");
-            //Mock.Get(hubAllClientsMock).Verify(_ => _.SendAsync("NewTeamMemberAdded", "Tudor", 2), Times.Once());
+             // Assert
+             //It.IsAny<string>()
+             hubAllClientsMock.Verify(hubAllClients => hubAllClients.SendAsync("NewTeamMemberAdded", "Tudor", 2, It.IsAny<CancellationToken>()), Times.Once(), "I expect SendAsync to be called once.");
+             //Mock.Get(hubAllClientsMock).Verify(_ => _.SendAsync("NewTeamMemberAdded", "Tudor", 2), Times.Once());
 
-        }*/
+         }*/
 
         /*private Mock<IHubClients> hubClientsMock;
         private Mock<IClientProxy> hubAllClientsMock;*/
