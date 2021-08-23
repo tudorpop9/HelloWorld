@@ -2,11 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.Threading;
 using HelloWorldWeb.Models;
 using HelloWorldWeb.Services;
 using Microsoft.AspNetCore.SignalR;
 using Moq;
-using System.Threading;
 using Xunit;
 
 namespace HelloWorldWeb.Tests
@@ -94,7 +94,6 @@ namespace HelloWorldWeb.Tests
             // Assert
             Assert.Null(teamService.GetTeamMemberById(idCounter));
             Mock.Get(bcService).Verify(_ => _.TeamMemberDeleted(It.IsAny<int>()), Times.Once());
-
         }
 
         [Fact]
@@ -113,7 +112,6 @@ namespace HelloWorldWeb.Tests
             Assert.Null(teamService.GetTeamMemberById(newTeamMember.Id));
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
             Mock.Get(bcService).Verify(_ => _.TeamMemberDeleted(It.IsAny<int>()), Times.Once());
-
         }
 
         [Fact]
@@ -133,7 +131,6 @@ namespace HelloWorldWeb.Tests
             Assert.Null(teamService.GetTeamMemberById(givenId));
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
             Mock.Get(bcService).Verify(_ => _.TeamMemberDeleted(It.IsAny<int>()), Times.Once());
-
         }
 
         [Fact]
@@ -156,7 +153,6 @@ namespace HelloWorldWeb.Tests
             Assert.Equal(newName, memberReference.Name);
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
             Mock.Get(bcService).Verify(_ => _.UpdatedTeamMember(It.IsAny<int>(), It.IsAny<string>()), Times.Once());
-
         }
 
         [Fact]
@@ -178,7 +174,6 @@ namespace HelloWorldWeb.Tests
             Assert.Null(memberReference);
             Assert.Equal(expectedId, returnedId);
             Mock.Get(bcService).Verify(_ => _.UpdatedTeamMember(It.IsAny<int>(), It.IsAny<string>()), Times.Never());
-
         }
 
         // test function from Sorina
@@ -201,7 +196,6 @@ namespace HelloWorldWeb.Tests
             Assert.Null(member);
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
             Mock.Get(bcService).Verify(_ => _.TeamMemberDeleted(It.IsAny<int>()), Times.Exactly(2));
-
         }
 
         private void InitializeBroadcastServiceMock()

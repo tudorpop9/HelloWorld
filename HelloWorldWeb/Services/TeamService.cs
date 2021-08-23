@@ -13,11 +13,10 @@ namespace HelloWorldWeb.Services
     /// </summary>
     public class TeamService : ITeamService
     {
+        private readonly IBroadcastService broadcastService;
 
         private TeamInfo teamInfo;
-        private readonly IBroadcastService broadcastService;
         private ITimeService timeService = null;
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamService"/> class.
