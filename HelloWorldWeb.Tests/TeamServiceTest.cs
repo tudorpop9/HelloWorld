@@ -14,7 +14,7 @@ namespace HelloWorldWeb.Tests
     public class TeamServiceTest
     {
         private ITimeService timeService = null;
-        private Mock<IHubContext<MessageHub>> messageHubMock = null;
+        private Mock<IBroadcastService> broadcastServiceMock = null;
 
         /// <summary>
         /// Assume // Act // Assert.
@@ -23,20 +23,23 @@ namespace HelloWorldWeb.Tests
         public void AddTeamMemberToTheTeam()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            var bcService = GetBroadCastService();
+            ITeamService teamService = new TeamService(bcService);
+            TeamMember newTeamMember = new Models.TeamMember("George", timeService);
 
             // Act
-            teamService.AddTeamMember(new Models.TeamMember("George", timeService));
+            teamService.AddTeamMember(newTeamMember);
 
             // Assert
             Assert.Equal(7, teamService.GetTeamInfo().TeamMembers.Count);
+            Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
         }
 
         [Fact]
         public void GetItemByIdNotNull()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
             int existingId = teamService.GetTeamInfo().TeamMembers[0].Id;
 
             // Act
@@ -50,7 +53,7 @@ namespace HelloWorldWeb.Tests
         public void GetItemByIdNull()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
             int givenId = 1010101;
 
             // Act
@@ -64,7 +67,7 @@ namespace HelloWorldWeb.Tests
         public void GetItemByIdFound()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
             int givenId = 100;
 
             // Act
@@ -79,7 +82,7 @@ namespace HelloWorldWeb.Tests
         public void DeleteDefaultMemberByIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
             int idCounter = TeamMember.GetIdCounter();
 
             // Act
@@ -93,7 +96,7 @@ namespace HelloWorldWeb.Tests
         public void DeleteNewMemberByStaticIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
 
             // Act
             TeamMember newTeamMember = new TeamMember("Cthulhu", timeService);
@@ -108,7 +111,7 @@ namespace HelloWorldWeb.Tests
         public void DeleteNewMemberByGivenIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
             int givenId = 2000;
 
             // Act
@@ -124,7 +127,7 @@ namespace HelloWorldWeb.Tests
         public void UpdateExistingMemberTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
             int givenId = 2000;
             string newName = "Andrei";
             TeamMember newTeamMember = new TeamMember(givenId, "Cthulhu", timeService);
@@ -143,7 +146,7 @@ namespace HelloWorldWeb.Tests
         public void UpdateUnexistingMemberTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
             int givenId = 2500;
             int expectedId = -1;
             string newName = "Andrei";
@@ -162,7 +165,7 @@ namespace HelloWorldWeb.Tests
         public void CheckIdProblemTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetMockedMessageHub());
+            ITeamService teamService = new TeamService(GetBroadCastService());
             var memberToBeDeleted = teamService.GetTeamInfo().TeamMembers[teamService.GetTeamInfo().TeamMembers.Count - 2];
             var newMemberName = "Borys";
 
@@ -176,7 +179,7 @@ namespace HelloWorldWeb.Tests
             Assert.Null(member);
         }
 
-        [Fact]
+       /* [Fact]
         public void CheckLine60()
         {
             // Assume
@@ -192,30 +195,31 @@ namespace HelloWorldWeb.Tests
             hubAllClientsMock.Verify(hubAllClients => hubAllClients.SendAsync("NewTeamMemberAdded", "Tudor", 2, It.IsAny<CancellationToken>()), Times.Once(), "I expect SendAsync to be called once.");
             //Mock.Get(hubAllClientsMock).Verify(_ => _.SendAsync("NewTeamMemberAdded", "Tudor", 2), Times.Once());
 
-        }
+        }*/
 
-        private Mock<IHubClients> hubClientsMock;
-        private Mock<IClientProxy> hubAllClientsMock;
+        /*private Mock<IHubClients> hubClientsMock;
+        private Mock<IClientProxy> hubAllClientsMock;*/
 
-        private void InitializeMessageHubMock()
+        private void InitializeBroadcastServiceMock()
         {
-            // https://www.codeproject.com/Articles/1266538/Testing-SignalR-Hubs-in-ASP-NET-Core-2-1
+            /*// https://www.codeproject.com/Articles/1266538/Testing-SignalR-Hubs-in-ASP-NET-Core-2-1
             hubAllClientsMock = new Mock<IClientProxy>();
             hubClientsMock = new Mock<IHubClients>();
             hubClientsMock.Setup(_ => _.All).Returns(hubAllClientsMock.Object);
             messageHubMock = new Mock<IHubContext<MessageHub>>();
 
-            messageHubMock.SetupGet(_ => _.Clients).Returns(hubClientsMock.Object);
+            messageHubMock.SetupGet(_ => _.Clients).Returns(hubClientsMock.Object);*/
+            this.broadcastServiceMock = new Mock<IBroadcastService>();
         }
 
-        private IHubContext<MessageHub> GetMockedMessageHub()
+        private IBroadcastService GetBroadCastService()
         {
-            if (messageHubMock == null)
+            if (broadcastServiceMock == null)
             {
-                InitializeMessageHubMock();
+                InitializeBroadcastServiceMock();
             }
 
-            return messageHubMock.Object;
+            return broadcastServiceMock.Object;
         }
     }
 }
