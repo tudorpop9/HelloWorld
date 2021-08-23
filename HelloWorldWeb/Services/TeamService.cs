@@ -13,16 +13,17 @@ namespace HelloWorldWeb.Services
     /// </summary>
     public class TeamService : ITeamService
     {
-        private readonly IHubContext<MessageHub> messageHub;
 
         private TeamInfo teamInfo;
+        private readonly IBroadcastService broadcastService;
         private ITimeService timeService = null;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamService"/> class.
         /// </summary>
-        /// <param name="messageHubContext"> Notifies cliets of data chages.</param>
-        public TeamService(IHubContext<MessageHub> messageHubContext)
+        /// <param name="broadcastService"> Notifies cliets of data chages.</param>
+        public TeamService(IBroadcastService broadcastService)
         {
             this.teamInfo = new TeamInfo
             {
@@ -37,7 +38,7 @@ namespace HelloWorldWeb.Services
             teamInfo.TeamMembers.Add(new TeamMember("Tudor", timeService));
             teamInfo.TeamMembers.Add(new TeamMember("Fineas", timeService));
 
-            this.messageHub = messageHubContext;
+            this.broadcastService = broadcastService;
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace HelloWorldWeb.Services
         public int AddTeamMember(TeamMember newTeamMember)
         {
             teamInfo.TeamMembers.Add(newTeamMember);
-            messageHub.Clients.All.SendAsync("NewTeamMemberAdded", newTeamMember.Name, newTeamMember.Id);
+            broadcastService.NewTeamMemberAdded(newTeamMember.Name, newTeamMember.Id);
 
             return newTeamMember.Id;
         }

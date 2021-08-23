@@ -54,6 +54,7 @@ namespace HelloWorldWeb
             services.AddSingleton<ITimeService>(new TimeService());
 
             services.AddSignalR();
+            services.AddSingleton<IBroadcastService, BroadcastService>();
 
             services.AddSwaggerGen(c =>
             {
