@@ -84,14 +84,17 @@ namespace HelloWorldWeb.Tests
         public void DeleteDefaultMemberByIdTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetBroadCastService());
-            int idCounter = TeamMember.GetIdCounter();
+            var bcService = GetBroadCastService();
+            ITeamService teamService = new TeamService(bcService);
+            int idCounter = TeamMember.GetIdCounter() - 1;
 
             // Act
             teamService.DeleteTeamMember(idCounter);
 
             // Assert
             Assert.Null(teamService.GetTeamMemberById(idCounter));
+            Mock.Get(bcService).Verify(_ => _.TeamMemberDeleted(It.IsAny<int>()), Times.Once());
+
         }
 
         [Fact]
@@ -109,6 +112,8 @@ namespace HelloWorldWeb.Tests
             // Assert
             Assert.Null(teamService.GetTeamMemberById(newTeamMember.Id));
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+            Mock.Get(bcService).Verify(_ => _.TeamMemberDeleted(It.IsAny<int>()), Times.Once());
+
         }
 
         [Fact]
@@ -127,6 +132,7 @@ namespace HelloWorldWeb.Tests
             // Assert
             Assert.Null(teamService.GetTeamMemberById(givenId));
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+            Mock.Get(bcService).Verify(_ => _.TeamMemberDeleted(It.IsAny<int>()), Times.Once());
 
         }
 
@@ -149,6 +155,7 @@ namespace HelloWorldWeb.Tests
             Assert.Equal(returnedId, givenId);
             Assert.Equal(newName, memberReference.Name);
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+            Mock.Get(bcService).Verify(_ => _.UpdatedTeamMember(It.IsAny<int>(), It.IsAny<string>()), Times.Once());
 
         }
 
@@ -156,7 +163,9 @@ namespace HelloWorldWeb.Tests
         public void UpdateUnexistingMemberTest()
         {
             // Assume
-            ITeamService teamService = new TeamService(GetBroadCastService());
+            var bcService = GetBroadCastService();
+            ITeamService teamService = new TeamService(bcService);
+
             int givenId = 2500;
             int expectedId = -1;
             string newName = "Andrei";
@@ -168,6 +177,8 @@ namespace HelloWorldWeb.Tests
             // Assert
             Assert.Null(memberReference);
             Assert.Equal(expectedId, returnedId);
+            Mock.Get(bcService).Verify(_ => _.UpdatedTeamMember(It.IsAny<int>(), It.IsAny<string>()), Times.Never());
+
         }
 
         // test function from Sorina
@@ -189,6 +200,7 @@ namespace HelloWorldWeb.Tests
             var member = teamService.GetTeamInfo().TeamMembers.Find(element => element.Name == newMemberName);
             Assert.Null(member);
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
+            Mock.Get(bcService).Verify(_ => _.TeamMemberDeleted(It.IsAny<int>()), Times.Exactly(2));
 
         }
 
