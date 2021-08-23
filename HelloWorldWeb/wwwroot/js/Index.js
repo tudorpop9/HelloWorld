@@ -5,16 +5,12 @@ $(document).ready(function () {
     var connection = new signalR.HubConnectionBuilder().withUrl("/messagehub").build();
     setDelete();
 
-    connection.on("NewTeamMemberAdded", function (teamMemberName, teamMemberId) {
-        console.log(`New team member added: ${teamMemberName} with id ${teamMemberId}`);
-        createNewcomer(teamMemberName, teamMemberId)
-    });
-
     connection.start().then(function () {
         console.log("signalr connected");
-    }).catch(function (err) {
-        return console.error(err.toString());
     });
+    connection.on("NewTeamMemberAdded", createNewcomer);
+
+   
 
     $('#nameInputId').on('input change', function () {
         if ($(this).val() != '') {
