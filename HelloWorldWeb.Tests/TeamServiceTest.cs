@@ -192,36 +192,8 @@ namespace HelloWorldWeb.Tests
 
         }
 
-        /* [Fact]
-         public void CheckLine60()
-         {
-             // Assume
-             InitializeMessageHubMock();
-             hubAllClientsMock.Setup(_ => _.SendAsync("NewTeamMemberAdded", "Tudor", 2, It.IsAny<CancellationToken>()));
-             var messageHub = messageHubMock.Object;
-
-             // Act
-             messageHub.Clients.All.SendAsync("NewTeamMemberAdded", "Tudor", 2);
-
-             // Assert
-             //It.IsAny<string>()
-             hubAllClientsMock.Verify(hubAllClients => hubAllClients.SendAsync("NewTeamMemberAdded", "Tudor", 2, It.IsAny<CancellationToken>()), Times.Once(), "I expect SendAsync to be called once.");
-             //Mock.Get(hubAllClientsMock).Verify(_ => _.SendAsync("NewTeamMemberAdded", "Tudor", 2), Times.Once());
-
-         }*/
-
-        /*private Mock<IHubClients> hubClientsMock;
-        private Mock<IClientProxy> hubAllClientsMock;*/
-
         private void InitializeBroadcastServiceMock()
         {
-            /*// https://www.codeproject.com/Articles/1266538/Testing-SignalR-Hubs-in-ASP-NET-Core-2-1
-            hubAllClientsMock = new Mock<IClientProxy>();
-            hubClientsMock = new Mock<IHubClients>();
-            hubClientsMock.Setup(_ => _.All).Returns(hubAllClientsMock.Object);
-            messageHubMock = new Mock<IHubContext<MessageHub>>();
-
-            messageHubMock.SetupGet(_ => _.Clients).Returns(hubClientsMock.Object);*/
             this.broadcastServiceMock = new Mock<IBroadcastService>();
         }
 

@@ -37,17 +37,6 @@ $(document).ready(function () {
             data: {
                 "newTeammate": newcomerName
             },
-            success: (resultPost) => {
-                /* $("#teamMembersList").append(
-                     `<li class="member" id="${resultPost}">
-                         <span class="name">${newcomerName}</span>
-                         <span class="delete fa fa-remove" id="deleteMember"></span>
-                         <span class="edit fa fa-pencil"></span>
-                      </li>`);
-                 $("#nameInputId").val("");
-                 $('#addMemberButtonId').prop('disabled', true);
-                 setDelete();*/
-            }
         })
     });
 
