@@ -1,7 +1,18 @@
 ﻿// This JS file now uses jQuery. Pls see here: https://jquery.com/
+'use strict';
 $(document).ready(function () {
 
+    var connection = new signalR.HubConnectionBuilder().withUrl("/messagehub").build();
     setDelete();
+
+    connection.start().then(function () {
+        console.log("signalr connected");
+    });
+    connection.on("NewTeamMemberAdded", createNewcomer);
+    connection.on("DeleteTeamMember", deleteMember);
+    connection.on("UpdatedTeamMember", updateMember);
+
+   
 
     $('#nameInputId').on('input change', function () {
         if ($(this).val() != '') {
@@ -19,30 +30,12 @@ $(document).ready(function () {
     $("#addMemberButtonId").click(function () {
         var newcomerName = $("#nameInputId").val();
         $.ajax({
-            method: "GET",
-            url: "/Home/GetTeamCount",
-
-            success: (resultGet) => {
-                $.ajax({
-                    method: "POST",
-                    url: "/Home/AddTeamMember",
-                    data: {
-                        "newTeammate": newcomerName
-                    },
-                    success: (resultPost) => {
-                        $("#teamMembersList").append(
-                            `<li class="member" id="${resultPost}">
-                                <span class="name">${newcomerName}</span>
-                                <span class="delete fa fa-remove" id="deleteMember"></span>
-                                <span class="edit fa fa-pencil"></span>
-                             </li>`);
-                        $("#nameInputId").val("");
-                        $('#addMemberButtonId').prop('disabled', true);
-                        setDelete();
-                    }
-                })
-            }
-        });
+            method: "POST",
+            url: "/Home/AddTeamMember",
+            data: {
+                "newTeammate": newcomerName
+            },
+        })
     });
 
     $("#teamMembersList").on("click", ".edit", function () {
@@ -72,12 +65,6 @@ $(document).ready(function () {
                 "memberId": memberId,
                 "memberName": newName
             },
-            success: (resultPost) => {
-                if (resultPost != -1) {
-                    console.log('Update executed succesfuly ');
-                    location.reload();
-                }
-            }
         })
         
     })
@@ -102,10 +89,29 @@ function setDelete() {
             data: {
                 "id": id
             },
-            success: (result) => {
-                $(this).parent().remove();
-            }
         })
     }
     );
+}
+
+function createNewcomer(name, id) {
+    // Remember string interpolation in js: `text ${variable}`
+    $("#teamMembersList").append(
+        `<li class="member" id="${id}">
+                <span class="name">${name}</span>
+                <span class="delete fa fa-remove" id="deleteMember"></span>
+                <span class="edit fa fa-pencil"></span>
+         </li>`);
+
+    $("#nameInputId").val("");
+    $('#addMemberButtonId').prop('disabled', true);
+    setDelete();
+}
+
+var deleteMember = (id) => {
+    $(`li[id=${id}]`).remove();
+};
+
+var updateMember = (id, name) => {
+    $(`li[id=${id}]`).find(".name").text(name);
 }

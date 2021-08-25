@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldWeb", "HelloWorldWeb\HelloWorldWeb.csproj", "{BBD28F66-4032-427F-8463-516B78B13182}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld2", "HelloWorld2.console\HelloWorld2.csproj", "{748C8D82-BFA3-4683-BC1E-0C699FAC421D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld2", "HelloWorld2.Console\HelloWorld2.csproj", "{748C8D82-BFA3-4683-BC1E-0C699FAC421D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2F068687-73C3-461A-A26D-6DE737CABCB2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldWeb.Tests", "HelloWorldWeb.Tests\HelloWorldWeb.Tests.csproj", "{C8BC8DD3-687D-474A-A8E5-F160AD1C714F}"
