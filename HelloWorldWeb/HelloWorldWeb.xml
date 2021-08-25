@@ -16,19 +16,21 @@
             </summary>
             <param name="logger"> Necesary parameter for superclass.</param>
             <param name="teamService"> Team service param.</param>
+            <param name="timeService">Time service param.</param>
         </member>
         <member name="M:HelloWorldWeb.Controllers.HomeController.AddTeamMember(System.String)">
             <summary>
             Post endpoint which adds a new team member.
             </summary>
             <param name="newTeammate">Name of the new team member.</param>
+            <returns>TeamMember id.</returns>
         </member>
         <member name="M:HelloWorldWeb.Controllers.HomeController.UpdateTeamMember(System.Int32,System.String)">
             <summary>
             Post endpoint which adds a new team member.
             </summary>
-            <param name="memberName">New name of the team member.</param>
             <param name="memberId">Unique identifier for the team member.</param>
+            <param name="memberName">New name of the team member.</param>
             <returns>memberId on succes or -1 on if the member was not found.</returns>
         </member>
         <member name="M:HelloWorldWeb.Controllers.HomeController.GetTeamCount">
@@ -36,6 +38,12 @@
             Get endpoint which returns the number of team members.
             </summary>
             <returns>Number of team members.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.DeleteTeamMember(System.Int32)">
+            <summary>
+            Deletes a memeber.
+            </summary>
+            <param name="id">MemberId that needs to be deleted.</param>
         </member>
         <member name="M:HelloWorldWeb.Controllers.HomeController.Index">
             <summary>
@@ -55,12 +63,43 @@
             </summary>
             <returns>Returns an implementation of IActionResult which cotains error informations.</returns>
         </member>
+        <member name="M:HelloWorldWeb.Controllers.HomeController.Chat">
+            <summary>
+            Creates the Chat view.
+            </summary>
+            <returns>Returns the chat view.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.WeatherController.#ctor(HelloWorldWeb.Controllers.IWeatherControllerSettings)">
+            <summary>
+            Initializes a new instance of the <see cref="T:HelloWorldWeb.Controllers.WeatherController"/> class.
+            Configures api call parameters.
+            </summary>
+            <param name="settings">Extracted settings form config file.</param>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.WeatherController.Get">
+            <summary>
+            Gets daily records.
+            </summary>
+            <returns> A list of daily records.</returns>
+        </member>
+        <member name="M:HelloWorldWeb.Controllers.WeatherController.ConvertResponseToWeatherRecordList(System.String)">
+            <summary>
+            Doc.
+            </summary>
+            <param name="content">.</param>
+            <returns>..</returns>
+        </member>
         <member name="M:HelloWorldWeb.Controllers.WeatherController.Get(System.Int32)">
             <summary>
             Get a weather forecast for the day in specified amount of days from now.
             </summary>
             <param name="index">Amount of days from now (from 0 to 6).</param>
             <returns>The weather forecast.</returns>
+        </member>
+        <member name="T:HelloWorldWeb.Models.DailyWeatherRecord">
+            <summary>
+            Daily record object.
+            </summary>
         </member>
         <member name="T:HelloWorldWeb.Models.ErrorViewModel">
             <summary>
@@ -94,6 +133,11 @@
             Gets or sets team members.
             </summary>
         </member>
+        <member name="T:HelloWorldWeb.Models.WeatherType">
+            <summary>
+            All weather description tipes from API.
+            </summary>
+        </member>
         <member name="T:HelloWorldWeb.Program">
             <summary>
             A class that contains the main function.
@@ -122,16 +166,18 @@
             Dummy comment.
             </summary>
             <param name="newTeamMember">what?.</param>
+            <returns>Returns new member id.</returns>
         </member>
         <member name="T:HelloWorldWeb.Services.TeamService">
             <summary>
             Team service class.
             </summary>
         </member>
-        <member name="M:HelloWorldWeb.Services.TeamService.#ctor">
+        <member name="M:HelloWorldWeb.Services.TeamService.#ctor(HelloWorldWeb.Services.IBroadcastService)">
             <summary>
             Initializes a new instance of the <see cref="T:HelloWorldWeb.Services.TeamService"/> class.
             </summary>
+            <param name="broadcastService"> Notifies cliets of data chages.</param>
         </member>
         <member name="M:HelloWorldWeb.Services.TeamService.GetTeamInfo">
             <summary>
@@ -141,9 +187,10 @@
         </member>
         <member name="M:HelloWorldWeb.Services.TeamService.AddTeamMember(HelloWorldWeb.Models.TeamMember)">
             <summary>
-            Adds a new team member
+            Adds a new team member.
             </summary>
-            <param name="newTeamMember"> newTeammate name</param>
+            <param name="newTeamMember"> newTeammate name.</param>
+            <returns> Returns new member id.</returns>.
         </member>
         <member name="M:HelloWorldWeb.Services.TeamService.DeleteTeamMember(System.Int32)">
             <inheritdoc/>
@@ -175,12 +222,10 @@
             </summary>
             <param name="services">Metohd paramerter.</param>
         </member>
-        <member name="M:HelloWorldWeb.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="T:HelloWorldWeb.WeatherControllerSettings">
             <summary>
-            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            Class that extracts date from config file.
             </summary>
-            <param name="app">App parameter.</param>
-            <param name="env">Env parameter.</param>
         </member>
     </members>
 </doc>

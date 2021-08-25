@@ -20,6 +20,8 @@ namespace HelloWorldWeb.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public DateTime BirthDate { get; set; }
         public TeamMember()
         {
 
@@ -35,18 +37,10 @@ namespace HelloWorldWeb.Models
         public TeamMember(string name, ITimeService timeService)
         {
             this.timeService = timeService;
-            this.Id = idCounter;
             this.Name = name;
 
             idCounter++;
         }
-
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public DateTime BirthDate { get; set; }
-
         public static int GetIdCounter()
         {
             return idCounter;
