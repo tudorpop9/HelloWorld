@@ -80,7 +80,6 @@ namespace HelloWorldWeb.Tests
             Mock.Get(bcService).Verify(_ => _.NewTeamMemberAdded(It.IsAny<string>(), It.IsAny<int>()), Times.Once());
         }
 
-
         [Fact(Skip = "Skip test as an exercise")]
         public void DeleteDefaultMemberByIdTest()
         {

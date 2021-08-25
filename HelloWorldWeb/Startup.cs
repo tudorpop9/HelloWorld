@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using HelloWorldWeb.Controllers;
+using HelloWorldWeb.Data;
 using HelloWorldWeb.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using HelloWorldWeb.Data;
 using Microsoft.OpenApi.Models;
 
 namespace HelloWorldWeb
@@ -44,13 +44,25 @@ namespace HelloWorldWeb
         /// </summary>
         public IConfiguration Configuration { get; }
 
+        public static string ConvertHerokuConnToAspNetConnString(string herokuConnectionString)
+        {
+            var databaseUri = new Uri(herokuConnectionString);
+
+            // Username is on index 0 and password is on index 1
+            string[] userInfo = databaseUri.UserInfo.Split(":");
+
+            // "/dbName" => "dbName"
+            string databaseName = databaseUri.AbsolutePath.TrimStart('/');
+
+            return $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseName};User Id={userInfo[0]};Password={userInfo[1]};Pooling=true;SSL Mode=Require;TrustServerCertificate=True;Include Error Detail=True;";
+        }
+
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <param name="services">Metohd paramerter.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
             ObtainConnectionString()));
@@ -59,7 +71,6 @@ namespace HelloWorldWeb
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-            //services.AddSingleton<ITeamService, TeamService>();
 
             services.AddSingleton<IWeatherControllerSettings, WeatherControllerSettings>();
             services.AddSingleton<ITimeService>(new TimeService());
@@ -115,19 +126,6 @@ namespace HelloWorldWeb
             });
         }
 
-        public static string convertHerokuConnToAspNetConnString(string herokuConnectionString)
-        {
-            var databaseUri = new Uri(herokuConnectionString);
-
-            // Username is on index 0 and password is on index 1
-            string[] userInfo = databaseUri.UserInfo.Split(":");
-
-            // "/dbName" => "dbName"
-            string databaseName = databaseUri.AbsolutePath.TrimStart('/');
-
-            return $"Host={databaseUri.Host};Port={databaseUri.Port};Database={databaseName};User Id={userInfo[0]};Password={userInfo[1]};Pooling=true;SSL Mode=Require;TrustServerCertificate=True;Include Error Detail=True;";
-        }
-
         // returns dbConnectionString from DATABASE_URL environment variable, or the PostgresHerokuConnection if the variable is not initialized
         private string ObtainConnectionString()
         {
@@ -138,7 +136,7 @@ namespace HelloWorldWeb
                 return Configuration.GetConnectionString("DefaultConnection");
             }
 
-            return convertHerokuConnToAspNetConnString(envVarDbString);
+            return ConvertHerokuConnToAspNetConnString(envVarDbString);
         }
     }
 }

@@ -24,8 +24,6 @@ namespace HelloWorldWeb.Controllers
         private readonly ITimeService timeService;
         private readonly IBroadcastService broadcastService;
 
-        
-
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// Home controller constructor.
@@ -33,6 +31,7 @@ namespace HelloWorldWeb.Controllers
         /// <param name="logger"> Necesary parameter for superclass.</param>
         /// <param name="teamService"> Team service param.</param>
         /// <param name="timeService">Time service param.</param>
+        /// <param name="broadcastService">Notifies frontend about db changes.</param>
         public HomeController(ILogger<HomeController> logger, ITeamService teamService, ITimeService timeService, IBroadcastService broadcastService)
         {
             this.logger = logger;

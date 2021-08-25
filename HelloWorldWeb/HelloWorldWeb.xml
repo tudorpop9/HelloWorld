@@ -17,6 +17,7 @@
             <param name="logger"> Necesary parameter for superclass.</param>
             <param name="teamService"> Team service param.</param>
             <param name="timeService">Time service param.</param>
+            <param name="broadcastService">Notifies frontend about db changes.</param>
         </member>
         <member name="M:HelloWorldWeb.Controllers.HomeController.AddTeamMember(System.String)">
             <summary>
@@ -95,6 +96,21 @@
             </summary>
             <param name="index">Amount of days from now (from 0 to 6).</param>
             <returns>The weather forecast.</returns>
+        </member>
+        <member name="T:HelloWorldWeb.Migrations.InitialMigrations">
+            <summary>
+            Initial migration used by ef to generate existing relations between project's models.
+            </summary>
+        </member>
+        <member name="T:HelloWorldWeb.Migrations.AddTeamMembers">
+            <summary>
+            Migration that ef uses to create TeamMember table in db.
+            </summary>
+        </member>
+        <member name="T:HelloWorldWeb.Migrations.Birthdate">
+            <summary>
+            Migration added after branch merge to create another column in TeamMember entity.
+            </summary>
         </member>
         <member name="T:HelloWorldWeb.Models.DailyWeatherRecord">
             <summary>

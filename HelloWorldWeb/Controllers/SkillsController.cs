@@ -1,28 +1,32 @@
-﻿using System;
+﻿// <copyright file="SkillsController.cs" company="Principal33 Solutions">
+// Copyright (c) Principal33 Solutions. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HelloWorldWeb.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HelloWorldWeb.Data;
 using WebApplication1.Models;
 
 namespace HelloWorldWeb.Controllers
 {
     public class SkillsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext dbContext;
 
         public SkillsController(ApplicationDbContext context)
         {
-            _context = context;
+            dbContext = context;
         }
 
         // GET: Skills
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Skill.ToListAsync());
+            return View(await dbContext.Skill.ToListAsync());
         }
 
         // GET: Skills/Details/5
@@ -33,7 +37,7 @@ namespace HelloWorldWeb.Controllers
                 return NotFound();
             }
 
-            var skill = await _context.Skill
+            var skill = await dbContext.Skill
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (skill == null)
             {
@@ -58,10 +62,11 @@ namespace HelloWorldWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(skill);
-                await _context.SaveChangesAsync();
+                dbContext.Add(skill);
+                await dbContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(skill);
         }
 
@@ -73,11 +78,12 @@ namespace HelloWorldWeb.Controllers
                 return NotFound();
             }
 
-            var skill = await _context.Skill.FindAsync(id);
+            var skill = await dbContext.Skill.FindAsync(id);
             if (skill == null)
             {
                 return NotFound();
             }
+
             return View(skill);
         }
 
@@ -97,8 +103,8 @@ namespace HelloWorldWeb.Controllers
             {
                 try
                 {
-                    _context.Update(skill);
-                    await _context.SaveChangesAsync();
+                    dbContext.Update(skill);
+                    await dbContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -111,8 +117,10 @@ namespace HelloWorldWeb.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(skill);
         }
 
@@ -124,7 +132,7 @@ namespace HelloWorldWeb.Controllers
                 return NotFound();
             }
 
-            var skill = await _context.Skill
+            var skill = await dbContext.Skill
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (skill == null)
             {
@@ -135,19 +143,20 @@ namespace HelloWorldWeb.Controllers
         }
 
         // POST: Skills/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var skill = await _context.Skill.FindAsync(id);
-            _context.Skill.Remove(skill);
-            await _context.SaveChangesAsync();
+            var skill = await dbContext.Skill.FindAsync(id);
+            dbContext.Skill.Remove(skill);
+            await dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SkillExists(int id)
         {
-            return _context.Skill.Any(e => e.Id == id);
+            return dbContext.Skill.Any(e => e.Id == id);
         }
     }
 }
