@@ -1,5 +1,5 @@
-﻿// <copyright file="HomeController.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
+﻿// <copyright file="HomeController.cs" company="Principal33 Solutions">
+// Copyright (c) Principal33 Solutions. All rights reserved.
 // </copyright>
 
 using System;
@@ -21,6 +21,10 @@ namespace HelloWorldWeb.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly ITeamService teamService;
+        private readonly ITimeService timeService;
+        private readonly IBroadcastService broadcastService;
+
+        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
@@ -28,34 +32,45 @@ namespace HelloWorldWeb.Controllers
         /// </summary>
         /// <param name="logger"> Necesary parameter for superclass.</param>
         /// <param name="teamService"> Team service param.</param>
-        public HomeController(ILogger<HomeController> logger, ITeamService teamService)
+        /// <param name="timeService">Time service param.</param>
+        public HomeController(ILogger<HomeController> logger, ITeamService teamService, ITimeService timeService, IBroadcastService broadcastService)
         {
             this.logger = logger;
             this.teamService = teamService;
+            this.timeService = timeService;
+            this.broadcastService = broadcastService;
         }
 
         /// <summary>
         /// Post endpoint which adds a new team member.
         /// </summary>
         /// <param name="newTeammate">Name of the new team member.</param>
+        /// <returns>TeamMember id.</returns>
         [HttpPost]
         public int AddTeamMember(string newTeammate)
         {
-/*            int newId = teamService.GetTeamInfo().TeamMembers.Count() + 1;
-            return teamService.AddTeamMember(new TeamMember(newId + 1, newTeammate));*/
-            return teamService.AddTeamMember(new TeamMember(newTeammate));
+            TeamMember newTeamMember = new TeamMember(newTeammate, timeService);
+            var returnVal = teamService.AddTeamMember(newTeamMember);
+
+            broadcastService.NewTeamMemberAdded(newTeamMember.Name, newTeamMember.Id);
+
+            return returnVal;
         }
 
         /// <summary>
         /// Post endpoint which adds a new team member.
         /// </summary>
-        /// <param name="memberName">New name of the team member.</param>
         /// <param name="memberId">Unique identifier for the team member.</param>
+        /// <param name="memberName">New name of the team member.</param>
         /// <returns>memberId on succes or -1 on if the member was not found.</returns>
         [HttpPost]
         public int UpdateTeamMember(int memberId, string memberName)
         {
-            return teamService.UpdateTeamMember(memberId, memberName);
+            var returnVal = teamService.UpdateTeamMember(memberId, memberName);
+
+            broadcastService.UpdatedTeamMember(memberId, memberName);
+
+            return returnVal;
         }
 
         /// <summary>
@@ -68,10 +83,15 @@ namespace HelloWorldWeb.Controllers
             return teamService.GetTeamInfo().TeamMembers.Count();
         }
 
+        /// <summary>
+        /// Deletes a memeber.
+        /// </summary>
+        /// <param name="id">MemberId that needs to be deleted.</param>
         [HttpDelete]
         public void DeleteTeamMember(int id)
         {
             this.teamService.DeleteTeamMember(id);
+            broadcastService.TeamMemberDeleted(id);
         }
 
         /// <summary>
@@ -100,6 +120,15 @@ namespace HelloWorldWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        /// <summary>
+        /// Creates the Chat view.
+        /// </summary>
+        /// <returns>Returns the chat view.</returns>
+        public IActionResult Chat()
+        {
+            return View();
         }
     }
 }

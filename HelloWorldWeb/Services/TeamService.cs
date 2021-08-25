@@ -1,12 +1,10 @@
-﻿// <copyright file="TeamService.cs" company="Principal33">
-// Copyright (c) Principal33. All rights reserved.
+﻿// <copyright file="TeamService.cs" company="Principal33 Solutions">
+// Copyright (c) Principal33 Solutions. All rights reserved.
 // </copyright>
 
-using HelloWorldWeb.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using HelloWorldWeb.Models;
+using Microsoft.AspNetCore.SignalR;
 
 namespace HelloWorldWeb.Services
 {
@@ -15,12 +13,16 @@ namespace HelloWorldWeb.Services
     /// </summary>
     public class TeamService : ITeamService
     {
+        private readonly IBroadcastService broadcastService;
+
         private TeamInfo teamInfo;
+        private ITimeService timeService = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamService"/> class.
         /// </summary>
-        public TeamService()
+        /// <param name="broadcastService"> Notifies cliets of data chages.</param>
+        public TeamService(IBroadcastService broadcastService)
         {
             this.teamInfo = new TeamInfo
             {
@@ -28,12 +30,14 @@ namespace HelloWorldWeb.Services
                 TeamMembers = new List<TeamMember>(),
             };
 
-            teamInfo.TeamMembers.Add(new TeamMember("Sorina"));
-            teamInfo.TeamMembers.Add(new TeamMember("Ema"));
-            teamInfo.TeamMembers.Add(new TeamMember("Radu"));
-            teamInfo.TeamMembers.Add(new TeamMember("Patrick"));
-            teamInfo.TeamMembers.Add(new TeamMember("Tudor"));
-            teamInfo.TeamMembers.Add(new TeamMember("Fineas"));
+            teamInfo.TeamMembers.Add(new TeamMember("Sorina", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Ema", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Radu", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Patrick", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Tudor", timeService));
+            teamInfo.TeamMembers.Add(new TeamMember("Fineas", timeService));
+
+            this.broadcastService = broadcastService;
         }
 
         /// <summary>
@@ -46,12 +50,15 @@ namespace HelloWorldWeb.Services
         }
 
         /// <summary>
-        /// Adds a new team member
+        /// Adds a new team member.
         /// </summary>
-        /// <param name="newTeamMember"> newTeammate name</param>
+        /// <param name="newTeamMember"> newTeammate name.</param>
+        /// <returns> Returns new member id.</returns>.
         public int AddTeamMember(TeamMember newTeamMember)
         {
             teamInfo.TeamMembers.Add(newTeamMember);
+            broadcastService.NewTeamMemberAdded(newTeamMember.Name, newTeamMember.Id);
+
             return newTeamMember.Id;
         }
 
@@ -62,8 +69,8 @@ namespace HelloWorldWeb.Services
             if (teamMember != null)
             {
                 this.teamInfo.TeamMembers.Remove(teamMember);
+                this.broadcastService.TeamMemberDeleted(id);
             }
-
         }
 
         /// <inheritdoc/>
@@ -89,6 +96,7 @@ namespace HelloWorldWeb.Services
             {
                 existingMember.Name = memberName;
                 returnId = memberId;
+                this.broadcastService.UpdatedTeamMember(memberId, memberName);
             }
 
             return returnId;
