@@ -95,7 +95,6 @@ namespace HelloWorldWeb
             services.AddScoped<ITeamService, DbTeamService>();
 
             AssignRoleProgramaticaly(services.BuildServiceProvider());
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using HelloWorldWeb.Models;
 
 namespace HelloWorldWeb.Data
 {
@@ -20,5 +21,6 @@ namespace HelloWorldWeb.Data
         public DbSet<WebApplication1.Models.Skill> Skill { get; set; }
 
         public DbSet<HelloWorldWeb.Models.TeamMember> TeamMembers { get; set; }
+
     }
 }
