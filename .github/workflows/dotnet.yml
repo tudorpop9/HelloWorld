@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [ main ]
+    branches: [ branch_2_to_be_merged ]
   pull_request:
-    branches: [ main ]
+    branches: [ branch_2_to_be_merged ]
 
 jobs:
   build:
