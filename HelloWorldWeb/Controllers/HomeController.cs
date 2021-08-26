@@ -15,9 +15,11 @@ using Microsoft.Extensions.Logging;
 
 namespace HelloWorldWeb.Controllers
 {
+
     /// <summary>
     /// Home controller.
     /// </summary>
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
@@ -80,6 +82,7 @@ namespace HelloWorldWeb.Controllers
         /// </summary>
         /// <returns>Number of team members.</returns>
         [HttpGet]
+        [AllowAnonymous]
         public int GetTeamCount()
         {
             return teamService.GetTeamInfo().TeamMembers.Count();
@@ -101,6 +104,7 @@ namespace HelloWorldWeb.Controllers
         /// Loads the Index page.
         /// </summary>
         /// <returns>Returns an implementation of IActionResult which has the teamInfo member.</returns>
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View(teamService.GetTeamInfo());
@@ -110,6 +114,7 @@ namespace HelloWorldWeb.Controllers
         /// Loads the privacy page.
         /// </summary>
         /// <returns>Returns an implementation of IActionResult.</returns>
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
@@ -120,15 +125,18 @@ namespace HelloWorldWeb.Controllers
         /// </summary>
         /// <returns>Returns an implementation of IActionResult which cotains error informations.</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [AllowAnonymous]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+
         /// <summary>
         /// Creates the Chat view.
         /// </summary>
         /// <returns>Returns the chat view.</returns>
+        [AllowAnonymous]
         public IActionResult Chat()
         {
             return View();
