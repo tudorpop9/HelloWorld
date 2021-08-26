@@ -1,4 +1,7 @@
-﻿@model IEnumerable<UserWithRole>
+﻿@using Microsoft.AspNetCore.Identity
+
+@model IEnumerable<UserWithRole>
+@inject SignInManager<IdentityUser> SignInManager
 
 @{
     ViewData["Title"] = "Index";

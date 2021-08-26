@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using HelloWorldWeb.Data;
 using HelloWorldWeb.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HelloWorldWeb.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class UsersController : Controller
     {
         public static readonly string ADMIN_ROLE = "Administrators";
