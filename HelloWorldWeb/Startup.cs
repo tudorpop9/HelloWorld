@@ -93,6 +93,9 @@ namespace HelloWorldWeb
                 c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
             });
             services.AddScoped<ITeamService, DbTeamService>();
+
+            AssignRoleProgramaticaly(services.BuildServiceProvider());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -129,7 +132,16 @@ namespace HelloWorldWeb
                 endpoints.MapHub<MessageHub>("/messagehub");
                 endpoints.MapRazorPages();
             });
+
         }
+
+        private async void AssignRoleProgramaticaly(IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            var user = await userManager.FindByNameAsync("tudor.pop@principal33.com");
+            await userManager.AddToRoleAsync(user, "Administrators");
+        }
+
 
         // returns dbConnectionString from DATABASE_URL environment variable, or the PostgresHerokuConnection if the variable is not initialized
         private string ObtainConnectionString()

@@ -15,7 +15,7 @@ using WebApplication1.Models;
 
 namespace HelloWorldWeb.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrators")]
     public class SkillsController : Controller
     {
         private readonly ApplicationDbContext dbContext;
