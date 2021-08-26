@@ -15,7 +15,6 @@ using Microsoft.Extensions.Logging;
 
 namespace HelloWorldWeb.Controllers
 {
-
     /// <summary>
     /// Home controller.
     /// </summary>
@@ -130,7 +129,6 @@ namespace HelloWorldWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
 
         /// <summary>
         /// Creates the Chat view.

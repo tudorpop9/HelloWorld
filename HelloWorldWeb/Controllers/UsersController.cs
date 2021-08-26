@@ -1,14 +1,18 @@
-﻿using System;
+﻿// <copyright file="UsersController.cs" company="Principal33 Solutions">
+// Copyright (c) Principal33 Solutions. All rights reserved.
+// </copyright>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HelloWorldWeb.Data;
+using HelloWorldWeb.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HelloWorldWeb.Data;
-using HelloWorldWeb.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
 
 namespace HelloWorldWeb.Controllers
 {
@@ -32,7 +36,7 @@ namespace HelloWorldWeb.Controllers
         }
 
         // GET: Users/Details/[ugly string id]
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -89,7 +93,5 @@ namespace HelloWorldWeb.Controllers
 
             return users;
         }
-
-        
     }
 }

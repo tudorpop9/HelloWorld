@@ -131,7 +131,6 @@ namespace HelloWorldWeb
                 endpoints.MapHub<MessageHub>("/messagehub");
                 endpoints.MapRazorPages();
             });
-
         }
 
         private async void AssignRoleProgramaticaly(IServiceProvider services)
@@ -141,7 +140,6 @@ namespace HelloWorldWeb
             await userManager.AddToRoleAsync(user, "Administrators");
         }
 
-
         // returns dbConnectionString from DATABASE_URL environment variable, or the PostgresHerokuConnection if the variable is not initialized
         private string ObtainConnectionString()
         {
@@ -149,6 +147,7 @@ namespace HelloWorldWeb
 
             if (envVarDbString == null)
             {
+               // return Configuration.GetConnectionString("PostgresHerokuConnection");
                 return Configuration.GetConnectionString("DefaultConnection");
             }
 
