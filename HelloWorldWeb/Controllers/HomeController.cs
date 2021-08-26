@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HelloWorldWeb.Models;
 using HelloWorldWeb.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -46,6 +47,7 @@ namespace HelloWorldWeb.Controllers
         /// <param name="newTeammate">Name of the new team member.</param>
         /// <returns>TeamMember id.</returns>
         [HttpPost]
+        [Authorize]
         public int AddTeamMember(string newTeammate)
         {
             TeamMember newTeamMember = new TeamMember(newTeammate, timeService);
@@ -63,6 +65,7 @@ namespace HelloWorldWeb.Controllers
         /// <param name="memberName">New name of the team member.</param>
         /// <returns>memberId on succes or -1 on if the member was not found.</returns>
         [HttpPost]
+        [Authorize]
         public int UpdateTeamMember(int memberId, string memberName)
         {
             var returnVal = teamService.UpdateTeamMember(memberId, memberName);
@@ -87,6 +90,7 @@ namespace HelloWorldWeb.Controllers
         /// </summary>
         /// <param name="id">MemberId that needs to be deleted.</param>
         [HttpDelete]
+        [Authorize]
         public void DeleteTeamMember(int id)
         {
             this.teamService.DeleteTeamMember(id);
